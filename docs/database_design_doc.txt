@@ -1,0 +1,298 @@
+
+KAFTAN
+Database Design Document
+Editorial-first fashion publication CMS
+Plain-language guide for planning and implementation
+Complete table list
+This is the agreed table inventory for KAFTAN. The design keeps articles and image management at the centre, while keeping products, competitions and advertising lightweight.
+[ROW]  |  |  | Module
+ |  |  | Table
+ |  |  | What it does
+[ROW]  |  |  | Editorial
+ |  |  | articles
+ |  |  | All stories, including fashion editorials, interviews, trend reports and style guides.
+[ROW]  |  |  | Editorial
+ |  |  | authors
+ |  |  | Writer and contributor profiles.
+[ROW]  |  |  | Editorial
+ |  |  | article_authors
+ |  |  | Connects stories to one or more contributors.
+[ROW]  |  |  | Media
+ |  |  | media_assets
+ |  |  | Central library of uploaded images and their details.
+[ROW]  |  |  | Media
+ |  |  | media_variants
+ |  |  | Optimised versions and sizes of original images.
+[ROW]  |  |  | Media
+ |  |  | content_images
+ |  |  | Assigns desktop, tablet and mobile images to a content placement.
+[ROW]  |  |  | Homepage
+ |  |  | homepage_sections
+ |  |  | Defines homepage areas such as Hero, The Latest and Featured Stories.
+[ROW]  |  |  | Homepage
+ |  |  | homepage_items
+ |  |  | Controls the content and order within each homepage section.
+[ROW]  |  |  | Navigation
+ |  |  | navigation_items
+ |  |  | Controls top navigation links and dropdowns without an article-category system.
+[ROW]  |  |  | Products
+ |  |  | products
+ |  |  | Lightweight product information for promotional cards and external links.
+[ROW]  |  |  | Competition
+ |  |  | competitions
+ |  |  | Competition details, dates, rules and status.
+[ROW]  |  |  | Competition
+ |  |  | competition_entries
+ |  |  | People and submissions entered into a competition.
+[ROW]  |  |  | Sponsorship
+ |  |  | sponsors
+ |  |  | Brand and sponsor details.
+[ROW]  |  |  | Sponsorship
+ |  |  | campaigns
+ |  |  | Campaign information and dates.
+[ROW]  |  |  | Sponsorship
+ |  |  | sponsored_content
+ |  |  | Connects sponsored stories to campaigns.
+[ROW]  |  |  | Advertising
+ |  |  | ad_placements
+ |  |  | Defines advertising positions available on the site.
+[ROW]  |  |  | Advertising
+ |  |  | ad_creatives
+ |  |  | Banner copy, images, links and scheduling.
+[ROW]  |  |  | Administration
+ |  |  | users
+ |  |  | People who can sign in to the admin panel.
+Total: 19 planned tables, including the optional competition_prizes table. The agreed design does not include categories, subscribers, separate SEO tables, analytics tables, newsletter tables, user_roles, orders, inventory or checkout.
+1. What this database is for
+KAFTAN is planned as a fashion editorial publication first. The database should make it possible for the team to publish stories, manage photography for different screen sizes, arrange the landing page, show selected products, run a competition and manage sponsored placements from an admin panel.
+One shared articles table for all editorial formats.
+No required categories table. Navigation links and homepage sections are managed separately.
+One products table only; this is not a full online store.
+One active competition is expected at a time, while past competitions and entries can remain stored.
+Desktop, tablet and mobile images can be selected independently for the same placement.
+Each user has one role, assigned directly through users.role_id.
+2. Editorial content
+articles
+The main record for every story. The article format and its commercial relationship are separate fields.
+[ROW]  |  |  | Field
+ |  |  | Meaning / guidance
+[ROW]  |  |  | id
+ |  |  | Unique article identifier.
+[ROW]  |  |  | title
+ |  |  | Headline shown on the website.
+[ROW]  |  |  | slug
+ |  |  | Unique, readable part of the article URL.
+[ROW]  |  |  | excerpt
+ |  |  | Short summary used on cards and previews.
+[ROW]  |  |  | body
+ |  |  | Article content saved in the editor's structured format.
+[ROW]  |  |  | article_type
+ |  |  | Story format, for example fashion_editorial, interview, trend_report, style_guide, designer_profile or news.
+[ROW]  |  |  | content_type
+ |  |  | Commercial type: original, sponsored or affiliate.
+[ROW]  |  |  | status
+ |  |  | draft, in_review, scheduled, published or archived.
+[ROW]  |  |  | featured_image_id
+ |  |  | Optional reference to the main image in media_assets.
+[ROW]  |  |  | author_id
+ |  |  | Optional primary author reference; use article_authors for multiple contributors.
+[ROW]  |  |  | sponsor_id
+ |  |  | Optional sponsor reference; required for sponsored content.
+[ROW]  |  |  | published_at
+ |  |  | Date and time the article became published.
+[ROW]  |  |  | scheduled_at
+ |  |  | Planned publication date and time.
+[ROW]  |  |  | seo_title / seo_description
+ |  |  | Optional search metadata stored directly on the article, not in a separate SEO module.
+[ROW]  |  |  | canonical_url
+ |  |  | Optional preferred public URL.
+[ROW]  |  |  | created_by / updated_by
+ |  |  | Users who created or last updated the article.
+[ROW]  |  |  | created_at / updated_at
+ |  |  | Creation and last-update timestamps.
+Important distinction: article_type says what kind of story it is; content_type says whether it is original, sponsored or affiliate. A fashion editorial can be either original or sponsored.
+authors
+Stores a contributor's name, unique profile slug, biography, optional profile image, website and social links. The profile image refers to media_assets.
+article_authors
+Connects an article to contributors. It stores article_id, author_id, contribution_type (writer, photographer, stylist, editor, etc.) and display_order. This allows more than one contributor per story.
+Stores saved versions of an article, including the article reference, revision number, title, excerpt, body, person who saved the revision and timestamp. Revision numbers must be unique within each article.
+3. Image library and responsive images
+media_assets
+The central library for uploaded original files. Store the actual image file in object storage or a media service; the database stores the reference and details, not the image bytes.
+[ROW]  |  |  | Field
+ |  |  | Meaning / guidance
+[ROW]  |  |  | id
+ |  |  | Unique image identifier.
+[ROW]  |  |  | storage_key
+ |  |  | Path or key used to retrieve the original file.
+[ROW]  |  |  | original_filename
+ |  |  | Name of the uploaded file.
+[ROW]  |  |  | mime_type
+ |  |  | File type, such as image/jpeg or image/webp.
+[ROW]  |  |  | width / height
+ |  |  | Original pixel dimensions.
+[ROW]  |  |  | file_size_bytes
+ |  |  | Original file size.
+[ROW]  |  |  | alt_text
+ |  |  | Default accessibility description.
+[ROW]  |  |  | caption
+ |  |  | Optional caption.
+[ROW]  |  |  | credit
+ |  |  | Photographer or source credit.
+[ROW]  |  |  | license_info
+ |  |  | Usage rights or licensing notes.
+[ROW]  |  |  | metadata
+ |  |  | Optional additional details.
+[ROW]  |  |  | uploaded_by
+ |  |  | User who uploaded the file.
+[ROW]  |  |  | created_at
+ |  |  | Upload timestamp.
+media_variants
+Stores optimised copies created from an original image. Each record includes the original media_asset_id, its own storage key, variant name, width, height, format, file size and creation time. Example variants include a wide hero crop, a portrait mobile crop and smaller card sizes.
+content_images
+Connects images to a specific use or placement. A single placement can have separate desktop, tablet and mobile images, plus its own crop settings.
+[ROW]  |  |  | Field
+ |  |  | Meaning / guidance
+[ROW]  |  |  | id
+ |  |  | Unique image-placement identifier.
+[ROW]  |  |  | article_id / product_id / homepage_item_id / campaign_id
+ |  |  | The content owner. Exactly one owner reference should be populated.
+[ROW]  |  |  | placement
+ |  |  | Use such as hero, thumbnail, banner, inline or card.
+[ROW]  |  |  | desktop_image_id
+ |  |  | Reference to the desktop image asset.
+[ROW]  |  |  | tablet_image_id
+ |  |  | Optional tablet image asset.
+[ROW]  |  |  | mobile_image_id
+ |  |  | Optional mobile image asset.
+[ROW]  |  |  | alt_text
+ |  |  | Accessibility description for this placement.
+[ROW]  |  |  | focal_point_x / focal_point_y
+ |  |  | Optional focal position to help keep the subject visible when cropping.
+[ROW]  |  |  | fit_mode
+ |  |  | Whether the image should cover the area or fit inside it.
+[ROW]  |  |  | display_order
+ |  |  | Order in a gallery or group.
+[ROW]  |  |  | created_at / updated_at
+ |  |  | Timestamps.
+An image placement must belong to exactly one supported content owner. Enforce this with a database check constraint or use separate, strongly linked placement tables if stricter relationships are needed.
+If no mobile image is supplied, the website should fall back to the desktop image or a suitable generated crop; it must not show a blank image.
+The admin panel should preview the intended desktop and mobile layouts before publishing.
+Use responsive image delivery in the website so the browser loads an appropriate image for the screen and layout.
+Validate uploads and preserve image credit and licensing information.
+4. Homepage and navigation
+homepage_sections
+Defines the areas of the landing page. Examples include Hero, The Latest, Featured Stories, More Stories and Clearance Sale.
+[ROW]  |  |  | Field
+ |  |  | Meaning / guidance
+[ROW]  |  |  | id
+ |  |  | Unique section identifier.
+[ROW]  |  |  | section_key
+ |  |  | Stable unique key used by the application, such as latest_stories.
+[ROW]  |  |  | name / title
+ |  |  | Internal name and optional public heading.
+[ROW]  |  |  | layout_type
+ |  |  | Visual arrangement, such as hero, grid, carousel, banner or product_grid.
+[ROW]  |  |  | source_mode
+ |  |  | manual for editor-selected content or automatic for content selected by a rule.
+[ROW]  |  |  | items_limit
+ |  |  | Optional maximum number of items.
+[ROW]  |  |  | display_order
+ |  |  | Order of sections on the page.
+[ROW]  |  |  | is_active
+ |  |  | Whether the section is visible.
+[ROW]  |  |  | settings
+ |  |  | Optional layout settings stored as structured configuration.
+[ROW]  |  |  | created_at / updated_at
+ |  |  | Timestamps.
+homepage_items
+Defines what appears inside each homepage section and in what order. Each item references exactly one article, product, campaign or ad creative. It can include a display position, optional title and excerpt overrides, visibility dates and an active flag.
+Use database foreign keys for each supported content reference and a check constraint that requires exactly one reference to be filled in. Do not use a generic content ID with no enforced relationship.
+navigation_items
+Stores the label, URL, optional parent item, display position, active state and whether the link opens in a new tab. Parent-child relationships allow dropdowns. Navigation labels such as Style or Designers do not require an article categories table.
+5. Products
+products
+This is a lightweight product list for occasional product features, promotional cards or clearance-sale content. It is not intended to manage checkout or inventory.
+[ROW]  |  |  | Field
+ |  |  | Meaning / guidance
+[ROW]  |  |  | id
+ |  |  | Unique product identifier.
+[ROW]  |  |  | name / slug
+ |  |  | Product name and unique URL-friendly identifier.
+[ROW]  |  |  | description
+ |  |  | Short product description.
+[ROW]  |  |  | brand_name
+ |  |  | Brand or designer name as displayed.
+[ROW]  |  |  | image_id
+ |  |  | Default image reference in media_assets.
+[ROW]  |  |  | original_price / sale_price
+ |  |  | Optional displayed prices; both must be zero or greater.
+[ROW]  |  |  | currency
+ |  |  | Three-letter currency code. Choose the site's default deliberately.
+[ROW]  |  |  | product_url
+ |  |  | External product or retailer destination.
+[ROW]  |  |  | link_type
+ |  |  | external or affiliate.
+[ROW]  |  |  | status
+ |  |  | active or inactive.
+[ROW]  |  |  | created_at / updated_at
+ |  |  | Timestamps.
+No orders, checkout, stock, product variants or payment tables are needed for the agreed scope. If direct selling is introduced later, review the model before adding commerce features.
+6. Competition
+competitions
+Stores the title, slug, description, prize summary, terms, start and end times, status, creator and timestamps. Suggested statuses are draft, scheduled, active, closed and completed.
+competition_entries
+Stores each participant's competition reference, name, email, optional phone, form answers, submission time, verification status and eligibility. Competition-specific answers can be stored in a structured field when the form differs between competitions.
+competition_prizes (optional)
+Only needed if a competition can have multiple prizes. Stores the competition reference, prize title, description, quantity and display order. If each competition always has one prize, keep prize information on competitions and omit this table.
+The site should permit only one active competition at a time. Enforce that rule in the database or through a transaction-safe application rule. If a winning entry is stored on the competition, verify that it belongs to that same competition.
+7. Sponsorship and advertising
+sponsors
+Stores a brand's name, unique slug, optional logo image, website, description, contact details and status.
+campaigns
+Stores a campaign's sponsor, name, description, start and end dates, status and timestamps.
+sponsored_content
+Links an article to a campaign and stores the disclosure text shown to readers. Avoid duplicate links for the same article and campaign.
+ad_placements
+Defines available advertising slots, with a name, unique key, description, supported layouts and active status.
+ad_creatives
+Stores a campaign's ad placement, headline, copy, destination URL, desktop and optional mobile image, active dates and status. The admin can preview device-specific creatives before activation.
+Sponsored stories should be clearly disclosed. Campaign dates and status should be checked before showing a campaign or creative.
+8. Users and roles
+users
+Stores the user's name, unique email, role_id, account status, last login and timestamps. role is stored directly on the user record. Each user has one role, as agreed; there is no user_roles join table.
+If the application uses a managed identity provider, store its user identifier and do not manage passwords locally.
+If local passwords are used, store only a secure password hash; never store plain-text passwords.
+Enforce permissions on the server, not only by hiding buttons in the admin interface.
+Use foreign keys from created_by, updated_by and uploaded_by fields to users where applicable.
+9. Relationships and rules at a glance
+An article can have multiple contributors through article_authors.
+An article can have many revisions and image placements.
+An original media asset can have multiple optimised variants.
+A homepage section contains ordered homepage items.
+Each homepage item points to exactly one supported content type: article, product, campaign or ad creative.
+Each image placement points to exactly one supported owner and can have desktop, tablet and mobile image references.
+A sponsor can have multiple campaigns; a campaign can support multiple sponsored articles and advertising creatives.
+A competition can have many entries and, optionally, multiple prizes.
+Each user references one role.
+10. Data quality, security and performance
+Use unique constraints for article slugs, product slugs, author slugs, sponsor slugs, role names and navigation/section keys where applicable.
+Use foreign keys for relationships and choose deletion rules carefully. Preserve published content and historical records rather than cascading deletions indiscriminately.
+Add indexes for published articles by publication date, homepage items by section and position, competition entries by competition and submission time, and campaign/ad schedules.
+Use consistent created_at and updated_at timestamps. Update updated_at through a reliable application or database mechanism.
+Validate date ranges, prices, statuses, URLs, image dimensions and uploaded file types.
+Restrict admin access and permissions on the server. Keep secrets and credentials out of public client code.
+Back up the database and object storage. Test restoring both, not just the database.
+Use database migrations so schema changes are versioned and repeatable.
+Do not store image binaries directly in PostgreSQL; store image files in object storage and their metadata and keys in the database.
+11. Recommended implementation order
+Create users, then media_assets and authors.
+Create media_variants and content_images; implement responsive image upload, selection and preview in the admin panel.
+Create homepage_sections, homepage_items and navigation_items.
+Create products and competition tables.
+Create sponsors, campaigns, sponsored_content, ad_placements and ad_creatives.
+Add constraints, indexes, permissions, backups and seed data; test the complete editorial workflow before launch.
+12. Explicitly out of scope
+The agreed first version does not include mandatory categories, subscribers, a separate SEO module, analytics tables, newsletter tables, user_roles, a full e-commerce system, inventory, orders, checkout or payment processing. Basic SEO title and description fields may remain directly on articles without introducing separate SEO tables.
+Final design principle
+Keep articles as the main content record, keep all uploaded images in a shared media library, and let homepage placements reference content instead of duplicating it. This gives KAFTAN a manageable editorial system while allowing editors to control desktop and mobile imagery from the admin panel.
