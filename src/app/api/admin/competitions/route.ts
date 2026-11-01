@@ -145,6 +145,32 @@ export async function POST(request: Request) {
         return NextResponse.json({ error: error.message }, { status: 500 });
       }
       savedCompetition = data;
+
+      if (prize_title && savedCompetition.id) {
+        const { data: existingPrizes } = await supabase
+          .from('competition_prizes')
+          .select('id')
+          .eq('competition_id', savedCompetition.id)
+          .limit(1);
+
+        if (existingPrizes && existingPrizes.length > 0) {
+          await supabase
+            .from('competition_prizes')
+            .update({
+              title: prize_title.trim(),
+              description: prize_description?.trim() || null,
+            })
+            .eq('id', existingPrizes[0].id);
+        } else {
+          await supabase.from('competition_prizes').insert({
+            competition_id: savedCompetition.id,
+            title: prize_title.trim(),
+            description: prize_description?.trim() || null,
+            quantity: 1,
+            display_order: 1,
+          });
+        }
+      }
     } else {
       // Insert new
       const { data, error } = await supabase
@@ -189,4 +215,45 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }
+
+export async function DELETE(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    let id = searchParams.get('id');
+    if (!id) {
+      try {
+        const body = await request.json();
+        id = body?.id;
+      } catch {
+        // ignore
+      }
+    }
+
+    if (!id) {
+      return NextResponse.json({ error: 'Competition ID is required' }, { status: 400 });
+    }
+
+    if (!hasSupabaseConfigured()) {
+      return NextResponse.json({ success: true, message: 'Competition deleted locally' });
+    }
+
+    let supabase: any;
+    try {
+      supabase = createAdminClient();
+    } catch {
+      supabase = (await createServerSupabaseClient()) as any;
+    }
+
+    const { error } = await supabase.from('competitions').delete().eq('id', id);
+    if (error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+
+    return NextResponse.json({ success: true, message: 'Competition deleted successfully' });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : 'Server error deleting competition';
+    return NextResponse.json({ error: message }, { status: 500 });
+  }
+}
+
 

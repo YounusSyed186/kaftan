@@ -72,36 +72,36 @@ export function FeaturedEditorialGrid({
   const dataRight = resolveItemData(storyRight, itemOverrides?.[items[3]?.id]);
 
   const leftImg = buildCloudinaryUrl(
-    dataLeft.imageStorageKey || 'kaftan/editorial/redefining-fashion',
+    dataLeft.imageStorageKey || storyLeft.featured_image?.storage_key || 'kaftan/editorial/redefining-fashion',
     { width: 1200 }
   );
   const centerTopImg = buildCloudinaryUrl(
-    dataCenterTop.imageStorageKey || 'kaftan/editorial/effortless-dressing',
+    dataCenterTop.imageStorageKey || storyCenterTop.featured_image?.storage_key || 'kaftan/editorial/effortless-dressing',
     { width: 800 }
   );
   const centerBottomImg = buildCloudinaryUrl(
-    dataCenterBottom.imageStorageKey || 'kaftan/editorial/next-getaway',
+    dataCenterBottom.imageStorageKey || storyCenterBottom.featured_image?.storage_key || 'kaftan/editorial/next-getaway',
     { width: 800 }
   );
   const rightImg = buildCloudinaryUrl(
-    dataRight.imageStorageKey || 'kaftan/editorial/warm-days-bolder-looks',
+    dataRight.imageStorageKey || storyRight.featured_image?.storage_key || 'kaftan/editorial/warm-days-bolder-looks',
     { width: 1200 }
   );
 
   const mobileLeftImg = buildCloudinaryUrl(
-    dataLeft.mobileImageStorageKey || dataLeft.imageStorageKey || 'kaftan/editorial/redefining-fashion',
+    dataLeft.mobileImageStorageKey || dataLeft.imageStorageKey || storyLeft.featured_image?.storage_key || 'kaftan/editorial/redefining-fashion',
     { width: 800 }
   );
   const mobileCenterTopImg = buildCloudinaryUrl(
-    dataCenterTop.mobileImageStorageKey || dataCenterTop.imageStorageKey || 'kaftan/editorial/effortless-dressing',
+    dataCenterTop.mobileImageStorageKey || dataCenterTop.imageStorageKey || storyCenterTop.featured_image?.storage_key || 'kaftan/editorial/effortless-dressing',
     { width: 600 }
   );
   const mobileCenterBottomImg = buildCloudinaryUrl(
-    dataCenterBottom.mobileImageStorageKey || dataCenterBottom.imageStorageKey || 'kaftan/editorial/next-getaway',
+    dataCenterBottom.mobileImageStorageKey || dataCenterBottom.imageStorageKey || storyCenterBottom.featured_image?.storage_key || 'kaftan/editorial/next-getaway',
     { width: 600 }
   );
   const mobileRightImg = buildCloudinaryUrl(
-    dataRight.mobileImageStorageKey || dataRight.imageStorageKey || 'kaftan/editorial/warm-days-bolder-looks',
+    dataRight.mobileImageStorageKey || dataRight.imageStorageKey || storyRight.featured_image?.storage_key || 'kaftan/editorial/warm-days-bolder-looks',
     { width: 800 }
   );
 

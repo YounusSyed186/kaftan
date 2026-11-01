@@ -85,31 +85,38 @@ export function SponsoredAndAdSection({
 
   const isSlot2Editorial = adCreative.campaign_id === 'editorial';
   const effectiveAdSponsor =
-    adSponsorName ?? (isSlot2Editorial ? 'EDITORIAL STORY' : (adCreative.headline || 'FASHION SPECTRUM'));
+    isSlot2Editorial
+      ? (adSponsorName || 'EDITORIAL STORY')
+      : (adSponsorName || adCreative.headline || 'FASHION SPECTRUM');
   const effectiveAdHeadline =
-    adHeadline ?? (isSlot2Editorial ? adCreative.headline : (adCreative.copy || adCreative.headline || 'EFFORTLESS KAFTANS FOR EVERY OCCASION'));
+    isSlot2Editorial
+      ? (adCreative.headline || adHeadline || 'Editorial Feature')
+      : (adHeadline || adCreative.headline || adCreative.copy || 'EFFORTLESS KAFTANS FOR EVERY OCCASION');
   const effectiveAdCopy =
-    adCopy !== undefined
-      ? adCopy
-      : (isSlot2Editorial
-          ? (adCreative.copy || '')
-          : 'Discover handcrafted Australian silk kaftans designed for resort elegance and effortless summer living.');
+    isSlot2Editorial
+      ? (adCreative.copy || (adCopy !== undefined ? adCopy : ''))
+      : (adCopy !== undefined
+          ? adCopy
+          : (adCreative.copy || 'Discover handcrafted Australian silk kaftans designed for resort elegance and effortless summer living.'));
   const effectiveAdUrl =
-    adDestinationUrl ?? adCreative.destination_url ?? 'https://fashionspectrum.com.au/collection';
+    isSlot2Editorial
+      ? (adCreative.destination_url || (adDestinationUrl ?? '#'))
+      : (adDestinationUrl ?? adCreative.destination_url ?? 'https://fashionspectrum.com.au/collection');
   const effectiveAdCtaLabel =
-    adCtaLabel ?? (isSlot2Editorial ? 'Read Feature' : 'Shop The Collection');
+    isSlot2Editorial
+      ? (adCtaLabel || 'Read Feature')
+      : (adCtaLabel || 'Shop The Collection');
   const effectiveAdImg = buildCloudinaryUrl(
-    adDesktopImage?.storage_key ||
-      adCreative.desktop_image?.storage_key ||
-      'kaftan/editorial/ad-fashion-spectrum',
+    isSlot2Editorial
+      ? (adCreative.desktop_image?.storage_key || adDesktopImage?.storage_key || 'kaftan/editorial/ad-fashion-spectrum')
+      : (adDesktopImage?.storage_key || adCreative.desktop_image?.storage_key || 'kaftan/editorial/ad-fashion-spectrum'),
     { width: 1200 }
   );
 
   const effectiveAdMobileImg = buildCloudinaryUrl(
-    adMobileImage?.storage_key ||
-      adDesktopImage?.storage_key ||
-      adCreative.desktop_image?.storage_key ||
-      'kaftan/editorial/ad-fashion-spectrum',
+    isSlot2Editorial
+      ? (adCreative.mobile_image?.storage_key || adCreative.desktop_image?.storage_key || adMobileImage?.storage_key || 'kaftan/editorial/ad-fashion-spectrum')
+      : (adMobileImage?.storage_key || adDesktopImage?.storage_key || adCreative.desktop_image?.storage_key || 'kaftan/editorial/ad-fashion-spectrum'),
     { width: 800 }
   );
 

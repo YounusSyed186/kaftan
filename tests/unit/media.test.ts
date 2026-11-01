@@ -29,4 +29,13 @@ describe('Media & Cloudinary Transformations', () => {
   it('handles empty input gracefully without breaking', () => {
     expect(buildCloudinaryUrl('')).toBe('');
   });
+
+  it('normalizes local /images/ paths to dynamic Cloudinary asset delivery URLs', () => {
+    const localPath = '/images/editorial/hero-mediterranean-resortwear.jpg';
+    const url = buildCloudinaryUrl(localPath, { width: 1400 });
+
+    expect(url).toContain('res.cloudinary.com');
+    expect(url).toContain('kaftan/editorial/hero-mediterranean-resortwear');
+    expect(url).not.toContain('/images/');
+  });
 });

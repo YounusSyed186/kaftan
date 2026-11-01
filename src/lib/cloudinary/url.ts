@@ -30,8 +30,31 @@ export function buildCloudinaryUrl(
     return storageKeyOrUrl;
   }
 
-  // If local static asset in public/
-  if (storageKeyOrUrl.startsWith('/')) {
+  // If local static image path, normalize to dynamic Cloudinary asset key
+  if (storageKeyOrUrl.startsWith('/images/') || storageKeyOrUrl.startsWith('images/')) {
+    const clean = storageKeyOrUrl
+      .replace(/^\/?images\//, '')
+      .replace(/\.(jpg|jpeg|png|webp|avif)$/i, '');
+    storageKeyOrUrl = `kaftan/${clean}`;
+  } else if (storageKeyOrUrl.startsWith('/editorial/') || storageKeyOrUrl.startsWith('editorial/')) {
+    const clean = storageKeyOrUrl
+      .replace(/^\/?editorial\//, '')
+      .replace(/\.(jpg|jpeg|png|webp|avif)$/i, '');
+    storageKeyOrUrl = `kaftan/editorial/${clean}`;
+  } else if (storageKeyOrUrl.startsWith('/products/') || storageKeyOrUrl.startsWith('products/')) {
+    const clean = storageKeyOrUrl
+      .replace(/^\/?products\//, '')
+      .replace(/\.(jpg|jpeg|png|webp|avif)$/i, '');
+    storageKeyOrUrl = `kaftan/products/${clean}`;
+  } else if (storageKeyOrUrl.startsWith('/categories/') || storageKeyOrUrl.startsWith('categories/')) {
+    const clean = storageKeyOrUrl
+      .replace(/^\/?categories\//, '')
+      .replace(/\.(jpg|jpeg|png|webp|avif)$/i, '');
+    storageKeyOrUrl = `kaftan/categories/${clean}`;
+  }
+
+  // If local static SVG or non-media asset in public/
+  if (storageKeyOrUrl.startsWith('/') && (storageKeyOrUrl.endsWith('.svg') || storageKeyOrUrl.endsWith('.ico'))) {
     return storageKeyOrUrl;
   }
 

@@ -188,15 +188,35 @@ export async function publishHomepageDraft(
           .eq('id', sec.id);
 
         if (Array.isArray(sec.items)) {
-          for (const item of sec.items) {
-            await supabase
-              .from('homepage_items')
-              .update({
+          for (const [itemIdx, item] of sec.items.entries()) {
+            const isTempId = !item.id || item.id.startsWith('item-');
+            if (isTempId) {
+              await supabase.from('homepage_items').insert({
+                homepage_section_id: sec.id,
+                article_id: item.article_id || null,
+                product_id: item.product_id || null,
+                ad_creative_id: item.ad_creative_id || null,
+                display_order: item.display_order ?? itemIdx + 1,
                 title_override: item.title_override || null,
                 excerpt_override: item.excerpt_override || null,
+                is_active: item.is_active ?? true,
                 updated_at: publishedAt,
-              })
-              .eq('id', item.id);
+              });
+            } else {
+              await supabase
+                .from('homepage_items')
+                .update({
+                  article_id: item.article_id || null,
+                  product_id: item.product_id || null,
+                  ad_creative_id: item.ad_creative_id || null,
+                  display_order: item.display_order ?? itemIdx + 1,
+                  title_override: item.title_override || null,
+                  excerpt_override: item.excerpt_override || null,
+                  is_active: item.is_active ?? true,
+                  updated_at: publishedAt,
+                })
+                .eq('id', item.id);
+            }
           }
         }
       }

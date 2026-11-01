@@ -31,7 +31,9 @@ export function CompetitionPageClient({ competition }: CompetitionPageClientProp
   };
 
   const heroImage = buildCloudinaryUrl(
-    'kaftan/editorial/competition-strawhat-beach',
+    (competition as any).banner_image?.storage_key ||
+      (competition as any).image_url ||
+      'kaftan/editorial/competition-strawhat-beach',
     { width: 1600 }
   );
 
@@ -336,8 +338,8 @@ export function CompetitionPageClient({ competition }: CompetitionPageClientProp
             <div className="lg:col-span-6 grid grid-cols-2 gap-4">
               <div className="relative aspect-[3/4] border border-[#D8D1C5] overflow-hidden">
                 <Image
-                  src={buildCloudinaryUrl('kaftan/editorial/art-4-cover', { width: 800 })}
-                  alt="Model showcasing luxury silk kaftan"
+                  src={buildCloudinaryUrl('kaftan/products/azure-resort-kaftan', { width: 800 })}
+                  alt="Luxury Fashion Spectrum Silk Kaftan"
                   fill
                   sizes="(max-width: 1024px) 50vw, 25vw"
                   className="object-cover"
@@ -349,14 +351,14 @@ export function CompetitionPageClient({ competition }: CompetitionPageClientProp
 
               <div className="relative aspect-[3/4] border border-[#D8D1C5] overflow-hidden mt-6 lg:mt-8">
                 <Image
-                  src={buildCloudinaryUrl('kaftan/editorial/hero-mediterranean-resortwear', { width: 800 })}
-                  alt="Model in resortwear overlooking the sea"
+                  src={buildCloudinaryUrl('kaftan/products/emerald-resort-kaftan', { width: 800 })}
+                  alt="Embellished Resort Kaftan Tunic"
                   fill
                   sizes="(max-width: 1024px) 50vw, 25vw"
                   className="object-cover"
                 />
                 <div className="absolute bottom-2 left-2 right-2 bg-[#FCFAF6]/90 p-2 text-[9px] font-mono uppercase tracking-wider text-[#25221F] text-center border border-[#D8D1C5]">
-                  Crystal Short Tunic
+                  Crystal Resort Tunic
                 </div>
               </div>
             </div>

@@ -39,7 +39,7 @@ export interface HomepageStudioState {
   resetSectionFieldOverride: (sectionId: string, field: string) => void;
   setSlotArticle: (sectionId: string, slotIndex: number, article: PopulatedArticle, preserveOverrides?: boolean) => void;
   setSlotProduct: (sectionId: string, slotIndex: number, product: PopulatedProduct) => void;
-  setSlotAdCreative: (sectionId: string, slotIndex: number, adCreative: PopulatedAdCreative) => void;
+  setSlotAdCreative: (sectionId: string, slotIndex: number, adCreative: PopulatedAdCreative, customSettings?: Record<string, unknown>) => void;
   reorderSections: (fromIndex: number, toIndex: number) => void;
   toggleVisibility: (id: string) => void;
   addSection: (type: HomepageSectionType, targetIndex?: number) => void;
@@ -419,7 +419,7 @@ export const useHomepageStudioStore = create<HomepageStudioState>((set, get) => 
     });
   },
 
-  setSlotAdCreative: (sectionId, slotIndex, adCreative) => {
+  setSlotAdCreative: (sectionId, slotIndex, adCreative, customSettings) => {
     const current = get().sections;
     const past = [...get().past, current].slice(-MAX_HISTORY);
 
@@ -438,6 +438,11 @@ export const useHomepageStudioStore = create<HomepageStudioState>((set, get) => 
       delete currentSettings.ad_destination_url;
       delete currentSettings.ad_desktop_image;
       delete currentSettings.ad_mobile_image;
+
+      const mergedSettings = {
+        ...currentSettings,
+        ...(customSettings || {}),
+      };
 
       if (items[slotIndex]) {
         items[slotIndex] = {
@@ -473,7 +478,7 @@ export const useHomepageStudioStore = create<HomepageStudioState>((set, get) => 
       return {
         ...s,
         items,
-        settings: currentSettings as any,
+        settings: mergedSettings as any,
         updated_at: new Date().toISOString(),
       };
     });

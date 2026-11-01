@@ -103,7 +103,7 @@ export function MoreStoriesSection({
             const effectiveImgKey =
               (isMobile && resolved.mobileImageStorageKey)
                 ? resolved.mobileImageStorageKey
-                : (resolved.imageStorageKey || 'kaftan/editorial/more-accessories');
+                : (resolved.imageStorageKey || story.featured_image?.storage_key || 'kaftan/editorial/more-accessories');
 
             const imgSrc = buildCloudinaryUrl(
               effectiveImgKey,

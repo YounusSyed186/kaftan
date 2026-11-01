@@ -42,7 +42,7 @@ export const FALLBACK_ARTICLES: PopulatedArticle[] = [
     updated_at: '2026-10-20T08:00:00Z',
     featured_image: {
       id: 'img-1',
-      storage_key: '/images/editorial/hero-mediterranean-resortwear.jpg',
+      storage_key: 'kaftan/editorial/hero-mediterranean-resortwear',
       original_filename: 'hero-mediterranean-resortwear.jpg',
       mime_type: 'image/jpeg',
       width: 2400,
@@ -91,7 +91,7 @@ export const FALLBACK_ARTICLES: PopulatedArticle[] = [
     updated_at: '2026-10-20T07:30:00Z',
     featured_image: {
       id: 'img-2',
-      storage_key: '/images/editorial/story-resortwear-trends.jpg',
+      storage_key: 'kaftan/editorial/story-resortwear-trends',
       original_filename: 'resortwear-trends.jpg',
       mime_type: 'image/jpeg',
       width: 800,
@@ -129,7 +129,7 @@ export const FALLBACK_ARTICLES: PopulatedArticle[] = [
     updated_at: '',
     featured_image: {
       id: 'img-3',
-      storage_key: '/images/editorial/story-australian-labels.jpg',
+      storage_key: 'kaftan/editorial/story-australian-labels',
       original_filename: 'labels-global.jpg',
       mime_type: 'image/jpeg',
       width: 800,
@@ -167,7 +167,7 @@ export const FALLBACK_ARTICLES: PopulatedArticle[] = [
     updated_at: '',
     featured_image: {
       id: 'img-4',
-      storage_key: '/images/editorial/story-capsule-wardrobe.jpg',
+      storage_key: 'kaftan/editorial/story-capsule-wardrobe',
       original_filename: 'capsule.jpg',
       mime_type: 'image/jpeg',
       width: 800,
@@ -205,7 +205,7 @@ export const FALLBACK_ARTICLES: PopulatedArticle[] = [
     updated_at: '',
     featured_image: {
       id: 'img-5',
-      storage_key: '/images/editorial/story-fashion-boutiques.jpg',
+      storage_key: 'kaftan/editorial/story-fashion-boutiques',
       original_filename: 'boutiques.jpg',
       mime_type: 'image/jpeg',
       width: 800,
@@ -243,7 +243,7 @@ export const FALLBACK_ARTICLES: PopulatedArticle[] = [
     updated_at: '',
     featured_image: {
       id: 'img-6',
-      storage_key: '/images/editorial/redefining-fashion.jpg',
+      storage_key: 'kaftan/editorial/redefining-fashion',
       original_filename: 'designers.jpg',
       mime_type: 'image/jpeg',
       width: 900,
@@ -281,7 +281,7 @@ export const FALLBACK_ARTICLES: PopulatedArticle[] = [
     updated_at: '',
     featured_image: {
       id: 'img-7',
-      storage_key: '/images/editorial/effortless-dressing.jpg',
+      storage_key: 'kaftan/editorial/effortless-dressing',
       original_filename: 'effortless.jpg',
       mime_type: 'image/jpeg',
       width: 800,
@@ -319,7 +319,7 @@ export const FALLBACK_ARTICLES: PopulatedArticle[] = [
     updated_at: '',
     featured_image: {
       id: 'img-8',
-      storage_key: '/images/editorial/next-getaway.jpg',
+      storage_key: 'kaftan/editorial/next-getaway',
       original_filename: 'coastal.jpg',
       mime_type: 'image/jpeg',
       width: 800,
@@ -357,7 +357,7 @@ export const FALLBACK_ARTICLES: PopulatedArticle[] = [
     updated_at: '',
     featured_image: {
       id: 'img-9',
-      storage_key: '/images/editorial/warm-days-bolder-looks.jpg',
+      storage_key: 'kaftan/editorial/warm-days-bolder-looks',
       original_filename: 'warm-days.jpg',
       mime_type: 'image/jpeg',
       width: 900,
@@ -395,7 +395,7 @@ export const FALLBACK_ARTICLES: PopulatedArticle[] = [
     updated_at: '',
     featured_image: {
       id: 'img-10',
-      storage_key: '/images/editorial/sponsored-resort-living.jpg',
+      storage_key: 'kaftan/editorial/sponsored-resort-living',
       original_filename: 'resort-living.jpg',
       mime_type: 'image/jpeg',
       width: 800,
@@ -447,7 +447,7 @@ export const FALLBACK_ARTICLES: PopulatedArticle[] = [
     updated_at: '',
     featured_image: {
       id: 'img-12',
-      storage_key: '/images/editorial/more-accessories.jpg',
+      storage_key: 'kaftan/editorial/more-accessories',
       original_filename: 'accessories.jpg',
       mime_type: 'image/jpeg',
       width: 800,
@@ -485,7 +485,7 @@ export const FALLBACK_ARTICLES: PopulatedArticle[] = [
     updated_at: '',
     featured_image: {
       id: 'img-13',
-      storage_key: '/images/editorial/more-emerging-talent.jpg',
+      storage_key: 'kaftan/editorial/more-emerging-talent',
       original_filename: 'emerging.jpg',
       mime_type: 'image/jpeg',
       width: 800,
@@ -523,7 +523,7 @@ export const FALLBACK_ARTICLES: PopulatedArticle[] = [
     updated_at: '',
     featured_image: {
       id: 'img-14',
-      storage_key: '/images/editorial/more-conscious-wardrobe.jpg',
+      storage_key: 'kaftan/editorial/more-conscious-wardrobe',
       original_filename: 'conscious.jpg',
       mime_type: 'image/jpeg',
       width: 800,
@@ -561,7 +561,7 @@ export const FALLBACK_ARTICLES: PopulatedArticle[] = [
     updated_at: '',
     featured_image: {
       id: 'img-15',
-      storage_key: '/images/editorial/more-bec-bridge.jpg',
+      storage_key: 'kaftan/editorial/more-bec-bridge',
       original_filename: 'bec-bridge.jpg',
       mime_type: 'image/jpeg',
       width: 800,
@@ -596,7 +596,7 @@ export const FALLBACK_PRODUCTS: PopulatedProduct[] = [
     updated_at: '',
     image: {
       id: 'img-p1',
-      storage_key: '/images/products/azure-resort-kaftan.jpg',
+      storage_key: 'kaftan/products/azure-resort-kaftan',
       original_filename: 'azure-kaftan.jpg',
       mime_type: 'image/jpeg',
       width: 800,
@@ -628,7 +628,7 @@ export const FALLBACK_PRODUCTS: PopulatedProduct[] = [
     updated_at: '',
     image: {
       id: 'img-p2',
-      storage_key: '/images/products/blush-print-kaftan.jpg',
+      storage_key: 'kaftan/products/blush-print-kaftan',
       original_filename: 'blush-kaftan.jpg',
       mime_type: 'image/jpeg',
       width: 800,
@@ -660,7 +660,7 @@ export const FALLBACK_PRODUCTS: PopulatedProduct[] = [
     updated_at: '',
     image: {
       id: 'img-p3',
-      storage_key: '/images/products/classic-black-kaftan.jpg',
+      storage_key: 'kaftan/products/classic-black-kaftan',
       original_filename: 'black-kaftan.jpg',
       mime_type: 'image/jpeg',
       width: 800,
@@ -692,7 +692,7 @@ export const FALLBACK_PRODUCTS: PopulatedProduct[] = [
     updated_at: '',
     image: {
       id: 'img-p4',
-      storage_key: '/images/products/emerald-resort-kaftan.jpg',
+      storage_key: 'kaftan/products/emerald-resort-kaftan',
       original_filename: 'emerald-kaftan.jpg',
       mime_type: 'image/jpeg',
       width: 800,
@@ -724,7 +724,7 @@ export const FALLBACK_PRODUCTS: PopulatedProduct[] = [
     updated_at: '',
     image: {
       id: 'img-p5',
-      storage_key: '/images/products/terracotta-sunset-kaftan.jpg',
+      storage_key: 'kaftan/products/terracotta-sunset-kaftan',
       original_filename: 'terracotta-kaftan.jpg',
       mime_type: 'image/jpeg',
       width: 800,
@@ -756,7 +756,7 @@ export const FALLBACK_PRODUCTS: PopulatedProduct[] = [
     updated_at: '',
     image: {
       id: 'img-p6',
-      storage_key: '/images/products/monochrome-blazer-dress.jpg',
+      storage_key: 'kaftan/products/monochrome-blazer-dress',
       original_filename: 'tailored-midi-kaftan.jpg',
       mime_type: 'image/jpeg',
       width: 800,
@@ -788,7 +788,7 @@ export const FALLBACK_PRODUCTS: PopulatedProduct[] = [
     updated_at: '',
     image: {
       id: 'img-p7',
-      storage_key: '/images/products/solstice-gold-earrings.jpg',
+      storage_key: 'kaftan/products/solstice-gold-earrings',
       original_filename: 'solstice-gold-hoops.jpg',
       mime_type: 'image/jpeg',
       width: 800,
@@ -820,7 +820,7 @@ export const FALLBACK_PRODUCTS: PopulatedProduct[] = [
     updated_at: '',
     image: {
       id: 'img-p8',
-      storage_key: '/images/products/mediterranean-straw-panama.jpg',
+      storage_key: 'kaftan/products/mediterranean-straw-panama',
       original_filename: 'straw-panama-hat.jpg',
       mime_type: 'image/jpeg',
       width: 800,
@@ -853,7 +853,7 @@ export const FALLBACK_AD_CREATIVE: PopulatedAdCreative = {
   updated_at: '',
   desktop_image: {
     id: 'img-ad',
-    storage_key: '/images/editorial/ad-fashion-spectrum.jpg',
+    storage_key: 'kaftan/editorial/ad-fashion-spectrum',
     original_filename: 'ad.jpg',
     mime_type: 'image/jpeg',
     width: 800,

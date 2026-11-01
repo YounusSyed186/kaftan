@@ -140,33 +140,35 @@ export function HeroEditorialSection({
           {/* Left Column: Hero Photographic Panel with Left Text Overlay */}
           <div className="relative w-full aspect-[1.3025/1] max-h-[520px] xl:max-h-[540px] overflow-hidden bg-[#EFEAE0]">
             {/* Desktop Hero Image with Editable Element */}
-            <EditableElement
-              sectionId={sectionId}
-              elementId="desktop_hero_image"
-              elementType="image"
-              label="Desktop Hero Image"
-              isOverridden={Boolean(desktopHeroImage)}
-              className="absolute inset-0 block w-full h-full"
-            >
-              <Link
-                href={isEditorMode ? '#' : effectiveCtaUrl}
-                className="block w-full h-full"
-                tabIndex={-1}
-                aria-hidden="true"
+            <div className="absolute inset-0 block w-full h-full">
+              <EditableElement
+                sectionId={sectionId}
+                elementId="desktop_hero_image"
+                elementType="image"
+                label="Desktop Hero Image"
+                isOverridden={Boolean(desktopHeroImage)}
+                className="w-full h-full block"
               >
-                <EditorialImage
-                  media={activeArticle.featured_image}
-                  src={desktopSrc}
-                  alt={desktopAlt}
-                  fill
-                  priority
-                  disableZoom
-                  focalPoint={desktopFocal}
-                  sizes="(max-width: 1024px) 100vw, 75vw"
-                  className="w-full h-full"
-                />
-              </Link>
-            </EditableElement>
+                <Link
+                  href={isEditorMode ? '#' : effectiveCtaUrl}
+                  className="block w-full h-full"
+                  tabIndex={-1}
+                  aria-hidden="true"
+                >
+                  <EditorialImage
+                    media={activeArticle.featured_image}
+                    src={desktopSrc}
+                    alt={desktopAlt}
+                    fill
+                    priority
+                    disableZoom
+                    focalPoint={desktopFocal}
+                    sizes="(max-width: 1024px) 100vw, 75vw"
+                    className="w-full h-full"
+                  />
+                </Link>
+              </EditableElement>
+            </div>
 
             {/* Natural warm ivory vignette */}
             <div
@@ -354,33 +356,35 @@ export function HeroEditorialSection({
             ========================================================================= */}
         <div className={forcedViewport === 'mobile' ? 'flex flex-col' : (forcedViewport ? 'hidden' : 'md:hidden flex flex-col')}>
           {/* 1. Mobile Hero Image (Independently selected image) */}
-          <EditableElement
-            sectionId={sectionId}
-            elementId="mobile_hero_image"
-            elementType="image"
-            label="Mobile Hero Image"
-            isOverridden={Boolean(mobileHeroImage)}
-            className="relative w-full aspect-[1/1] sm:aspect-[4/3] overflow-hidden bg-[#EFEAE0]"
-          >
-            <Link
-              href={isEditorMode ? '#' : effectiveCtaUrl}
-              className="block w-full h-full"
-              tabIndex={-1}
-              aria-hidden="true"
+          <div className="relative w-full aspect-[1/1] sm:aspect-[4/3] overflow-hidden bg-[#EFEAE0]">
+            <EditableElement
+              sectionId={sectionId}
+              elementId="mobile_hero_image"
+              elementType="image"
+              label="Mobile Hero Image"
+              isOverridden={Boolean(mobileHeroImage)}
+              className="w-full h-full block"
             >
-              <EditorialImage
-                media={activeArticle.featured_image}
-                src={mobileSrc}
-                alt={mobileAlt}
-                fill
-                priority
-                disableZoom
-                focalPoint={mobileFocal}
-                sizes="100vw"
-                className="w-full h-full"
-              />
-            </Link>
-          </EditableElement>
+              <Link
+                href={isEditorMode ? '#' : effectiveCtaUrl}
+                className="block w-full h-full"
+                tabIndex={-1}
+                aria-hidden="true"
+              >
+                <EditorialImage
+                  media={activeArticle.featured_image}
+                  src={mobileSrc}
+                  alt={mobileAlt}
+                  fill
+                  priority
+                  disableZoom
+                  focalPoint={mobileFocal}
+                  sizes="100vw"
+                  className="w-full h-full"
+                />
+              </Link>
+            </EditableElement>
+          </div>
 
           {/* 2. Mobile Editorial Copy */}
           <div className="mt-4 sm:mt-5 flex flex-col items-start">

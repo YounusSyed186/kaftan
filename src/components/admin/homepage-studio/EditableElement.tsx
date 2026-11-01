@@ -55,12 +55,19 @@ export function EditableElement({
   }, [isEditingInline]);
 
   // If not explicitly in studio editor mode, render pure production children with zero editor overhead
+  // Preserve className wrappers so layout-critical styles (relative, aspect ratios, flex/grid) are maintained
   if (!isEditorMode || mode !== 'edit') {
+    if (className) {
+      return <div className={className}>{children}</div>;
+    }
     return <>{children}</>;
   }
 
   // Safety safeguard: never show studio elements on live public routes
   if (typeof window !== 'undefined' && !window.location.pathname.startsWith('/admin/homepage-studio')) {
+    if (className) {
+      return <div className={className}>{children}</div>;
+    }
     return <>{children}</>;
   }
 

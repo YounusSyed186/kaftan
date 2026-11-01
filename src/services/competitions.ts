@@ -69,3 +69,31 @@ export async function getActiveCompetition(): Promise<PopulatedCompetition | nul
     };
   }
 }
+
+export async function getAllCompetitions(): Promise<PopulatedCompetition[]> {
+  if (!hasSupabaseConfigured()) {
+    return [{ ...FALLBACK_COMPETITION, prizes: FALLBACK_PRIZES }];
+  }
+
+  try {
+    const supabase = await createServerSupabaseClient();
+    const { data, error } = await supabase
+      .from('competitions')
+      .select('*, competition_prizes(*)')
+      .order('created_at', { ascending: false });
+
+    if (error || !data || data.length === 0) {
+      return [{ ...FALLBACK_COMPETITION, prizes: FALLBACK_PRIZES }];
+    }
+
+    return (data as any[]).map((comp) => ({
+      ...comp,
+      prizes:
+        comp.competition_prizes && comp.competition_prizes.length > 0
+          ? comp.competition_prizes
+          : FALLBACK_PRIZES,
+    }));
+  } catch {
+    return [{ ...FALLBACK_COMPETITION, prizes: FALLBACK_PRIZES }];
+  }
+}

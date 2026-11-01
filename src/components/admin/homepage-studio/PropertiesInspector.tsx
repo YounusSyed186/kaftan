@@ -1526,8 +1526,8 @@ export function PropertiesInspector({
                                   id: preset.id,
                                   campaign_id: 'campaign-preset',
                                   ad_placement_id: 'mid_split',
-                                  headline: preset.sponsor,
-                                  copy: preset.headline,
+                                  headline: preset.headline,
+                                  copy: preset.copy,
                                   destination_url: preset.url,
                                   desktop_image_id: preset.id,
                                   mobile_image_id: null,
@@ -1554,14 +1554,15 @@ export function PropertiesInspector({
                                   },
                                 };
 
-                                setSlotAdCreative(selectedSection.id, 1, adCreativeObj);
-                                setSectionFieldOverride(selectedSection.id, 'ad_sponsor_name', preset.sponsor);
-                                setSectionFieldOverride(selectedSection.id, 'ad_headline', preset.headline);
-                                setSectionFieldOverride(selectedSection.id, 'ad_copy', preset.copy);
-                                setSectionFieldOverride(selectedSection.id, 'ad_destination_url', preset.url);
-                                setSectionFieldOverride(selectedSection.id, 'ad_desktop_image', {
-                                  storage_key: preset.image,
-                                  alt_text: preset.headline,
+                                setSlotAdCreative(selectedSection.id, 1, adCreativeObj, {
+                                  ad_sponsor_name: preset.sponsor,
+                                  ad_headline: preset.headline,
+                                  ad_copy: preset.copy,
+                                  ad_destination_url: preset.url,
+                                  ad_desktop_image: {
+                                    storage_key: preset.image,
+                                    alt_text: preset.headline,
+                                  },
                                 });
                                 setSelectingSlotIndex(null);
                               }}

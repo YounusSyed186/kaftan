@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { getAllPublishedArticles } from '@/services/articles';
 import { getAllProducts } from '@/services/products';
 import { getHomepageSections } from '@/services/homepage';
-import { getActiveCompetition } from '@/services/competitions';
+import { getActiveCompetition, getAllCompetitions } from '@/services/competitions';
 import { getEligibleAdCreative } from '@/services/advertising';
 import {
   FALLBACK_ARTICLES,
@@ -18,11 +18,12 @@ export const metadata: Metadata = {
 };
 
 export default async function AdminDashboardPage() {
-  const [articles, products, sections, competition, adCreative] = await Promise.all([
+  const [articles, products, sections, competition, allCompetitions, adCreative] = await Promise.all([
     getAllPublishedArticles(),
     getAllProducts(),
     getHomepageSections(),
     getActiveCompetition(),
+    getAllCompetitions(),
     getEligibleAdCreative(),
   ]);
 
@@ -31,7 +32,8 @@ export default async function AdminDashboardPage() {
       initialArticles={articles && articles.length > 0 ? articles : FALLBACK_ARTICLES}
       initialProducts={products && products.length > 0 ? products : FALLBACK_PRODUCTS}
       initialSections={sections}
-      initialCompetition={competition || FALLBACK_COMPETITION}
+      initialCompetition={competition || (allCompetitions && allCompetitions[0]) || FALLBACK_COMPETITION}
+      initialCompetitions={allCompetitions && allCompetitions.length > 0 ? allCompetitions : [FALLBACK_COMPETITION]}
       initialAdCreative={adCreative || FALLBACK_AD_CREATIVE}
     />
   );
