@@ -1,11 +1,32 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { buildCloudinaryUrl } from '@/lib/cloudinary/url';
+import { EditableElement } from '@/components/admin/homepage-studio/EditableElement';
 import type { PopulatedArticle, PopulatedAdCreative } from '@/types/models';
+import type { MediaReferenceOverride } from '@/types/content-overrides';
 
 interface SponsoredAndAdSectionProps {
   sponsoredArticle: PopulatedArticle;
   adCreative: PopulatedAdCreative;
+  sectionId?: string;
+  isEditorMode?: boolean;
+  sponsoredBadge?: string;
+  sponsoredTitle?: string;
+  sponsoredExcerpt?: string;
+  sponsoredImage?: MediaReferenceOverride;
+  sponsoredMobileImage?: MediaReferenceOverride;
+  adSponsorName?: string;
+  adHeadline?: string;
+  adCopy?: string;
+  adCtaLabel?: string;
+  adDestinationUrl?: string;
+  adDesktopImage?: MediaReferenceOverride;
+  adMobileImage?: MediaReferenceOverride;
+  forcedViewport?: 'desktop' | 'tablet' | 'mobile';
+  onCommitInlineText?: (field: string, value: string) => void;
 }
 
 function ArrowIcon() {
@@ -28,236 +49,451 @@ function ArrowIcon() {
 export function SponsoredAndAdSection({
   sponsoredArticle,
   adCreative,
+  sectionId = 'sponsored_and_advertising',
+  isEditorMode = false,
+  sponsoredBadge = 'PARTNERSHIP',
+  sponsoredTitle,
+  sponsoredExcerpt,
+  sponsoredImage,
+  sponsoredMobileImage,
+  adSponsorName,
+  adHeadline,
+  adCopy,
+  adCtaLabel,
+  adDestinationUrl,
+  adDesktopImage,
+  adMobileImage,
+  forcedViewport,
+  onCommitInlineText,
 }: SponsoredAndAdSectionProps) {
-  const sponsoredImg = sponsoredArticle.featured_image?.storage_key || '/images/editorial/sponsored-resort-living.jpg';
-  const adImg = adCreative.desktop_image?.storage_key || '/images/editorial/ad-fashion-spectrum.jpg';
+  const effectiveSponsoredTitle = sponsoredTitle || sponsoredArticle.title;
+  const effectiveSponsoredExcerpt = sponsoredExcerpt || sponsoredArticle.excerpt;
+  const effectiveSponsoredImg = buildCloudinaryUrl(
+    sponsoredImage?.storage_key ||
+      sponsoredArticle.featured_image?.storage_key ||
+      'kaftan/editorial/sponsored-resort-living',
+    { width: 1200 }
+  );
+
+  const effectiveSponsoredMobileImg = buildCloudinaryUrl(
+    sponsoredMobileImage?.storage_key ||
+      sponsoredImage?.storage_key ||
+      sponsoredArticle.featured_image?.storage_key ||
+      'kaftan/editorial/sponsored-resort-living',
+    { width: 800 }
+  );
+
+  const isSlot2Editorial = adCreative.campaign_id === 'editorial';
+  const effectiveAdSponsor =
+    adSponsorName ?? (isSlot2Editorial ? 'EDITORIAL STORY' : (adCreative.headline || 'FASHION SPECTRUM'));
+  const effectiveAdHeadline =
+    adHeadline ?? (isSlot2Editorial ? adCreative.headline : (adCreative.copy || adCreative.headline || 'EFFORTLESS KAFTANS FOR EVERY OCCASION'));
+  const effectiveAdCopy =
+    adCopy !== undefined
+      ? adCopy
+      : (isSlot2Editorial
+          ? (adCreative.copy || '')
+          : 'Discover handcrafted Australian silk kaftans designed for resort elegance and effortless summer living.');
+  const effectiveAdUrl =
+    adDestinationUrl ?? adCreative.destination_url ?? 'https://fashionspectrum.com.au/collection';
+  const effectiveAdCtaLabel =
+    adCtaLabel ?? (isSlot2Editorial ? 'Read Feature' : 'Shop The Collection');
+  const effectiveAdImg = buildCloudinaryUrl(
+    adDesktopImage?.storage_key ||
+      adCreative.desktop_image?.storage_key ||
+      'kaftan/editorial/ad-fashion-spectrum',
+    { width: 1200 }
+  );
+
+  const effectiveAdMobileImg = buildCloudinaryUrl(
+    adMobileImage?.storage_key ||
+      adDesktopImage?.storage_key ||
+      adCreative.desktop_image?.storage_key ||
+      'kaftan/editorial/ad-fashion-spectrum',
+    { width: 800 }
+  );
 
   return (
     <section
       aria-label="Sponsored and Advertising"
-      className="w-full bg-[#FAF8F5] border-b border-[#D8D1C5]/70 py-6 md:py-8 lg:py-10 px-4 sm:px-6 lg:px-8 xl:px-12"
+      className="w-full bg-[#FAF8F5] border-b border-[#D8D1C5]/70 py-6 md:py-8 lg:py-10"
     >
-      <div className="max-w-[1440px] mx-auto">
+      <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10">
         {/* =========================================================================
             DESKTOP: 2-BLOCK ASYMMETRIC LAYOUT (>= md)
             Left (~43%): Sponsored Editorial (Image Left + Text Right)
             Right (~57%): Advertisement Panel (Beige Card: Copy Left + Image Right)
             ========================================================================= */}
-        <div className="hidden md:grid md:grid-cols-[4.3fr_5.7fr] gap-6 lg:gap-8 items-stretch">
-          
+        <div className={forcedViewport === 'mobile' ? 'hidden' : (forcedViewport ? 'grid md:grid-cols-[4.3fr_5.7fr] gap-6 lg:gap-8 items-stretch' : 'hidden md:grid md:grid-cols-[4.3fr_5.7fr] gap-6 lg:gap-8 items-stretch')}>
           {/* =======================================================================
-              LEFT BLOCK: SPONSORED EDITORIAL
+              LEFT BLOCK: SPONSORED EDITORIAL (SLOT 0)
               ======================================================================= */}
-          <div className="flex flex-row items-stretch group">
-            {/* Portrait Image on Left */}
-            <Link
-              href={`/stories/${sponsoredArticle.slug}`}
-              className="relative w-[45%] self-stretch min-h-[350px] overflow-hidden bg-[#EFEAE0] block shrink-0"
-            >
-              <Image
-                src={sponsoredImg}
-                alt={sponsoredArticle.title}
-                fill
-                sizes="(max-width: 1280px) 22vw, 280px"
-                className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
-                priority
-                unoptimized
-              />
-            </Link>
-
-            {/* Editorial Copy on Right */}
-            <div className="flex-1 flex flex-col justify-between pl-5 lg:pl-6 py-1">
-              <div>
-                {/* Badge: Pink background with coral/salmon text */}
-                <span className="inline-block text-[8.5px] lg:text-[9px] font-bold uppercase tracking-[0.2em] text-[#C55757] bg-[#FCE5E2] px-2.5 py-1">
-                  Sponsored Editorial
-                </span>
-
-                {/* Headline: "The Art of" with "The Art" italicized coral */}
-                <Link href={`/stories/${sponsoredArticle.slug}`} className="block mt-3 mb-2.5">
-                  <h3 className="font-serif-editorial text-[23px] lg:text-[27px] xl:text-[29px] font-normal leading-[1.1] text-[#25221F] group-hover:text-[#A94F42] transition-colors max-w-[220px]">
-                    <span className="text-[#C55757] italic">The Art</span> of<br />
-                    Resort Living<br />
-                    with Fashion<br />
-                    Spectrum
-                  </h3>
-                </Link>
-
-                {/* Excerpt */}
-                <p className="text-[11.5px] lg:text-[12px] text-[#6A655F] leading-[1.6] font-light max-w-[240px]">
-                  {sponsoredArticle.excerpt || 'Discover timeless kaftans and elevated resortwear designed for modern women.'}
-                </p>
-              </div>
-
-              {/* CTA Link */}
-              <div className="pt-4">
+          <EditableElement
+            sectionId={sectionId}
+            elementId="slot_0"
+            elementType="slot"
+            label="Slot 1 (Sponsored Editorial)"
+            className="flex-1"
+          >
+            <div className="flex flex-row items-stretch group h-full">
+              {/* Portrait Image on Left */}
+              <EditableElement
+                sectionId={sectionId}
+                elementId="sponsored_image"
+                elementType="image"
+                label="Sponsored Image"
+                isOverridden={Boolean(sponsoredImage)}
+                className="relative w-[45%] self-stretch min-h-[350px] overflow-hidden bg-[#EFEAE0] block shrink-0"
+              >
                 <Link
-                  href={`/stories/${sponsoredArticle.slug}`}
-                  className="text-[9.5px] lg:text-[10px] font-bold uppercase tracking-[0.2em] text-[#25221F] hover:text-[#A94F42] transition-colors inline-flex items-center"
+                  href={isEditorMode ? '#' : `/stories/${sponsoredArticle.slug}`}
+                  className="block w-full h-full"
                 >
-                  Read More <ArrowIcon />
+                  <Image
+                    src={effectiveSponsoredImg}
+                    alt={effectiveSponsoredTitle}
+                    fill
+                    sizes="(max-width: 1280px) 22vw, 280px"
+                    className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+                    priority
+                  />
                 </Link>
+              </EditableElement>
+
+              {/* Editorial Copy on Right */}
+              <div className="flex-1 flex flex-col justify-between pl-5 lg:pl-6 py-1">
+                <div>
+                  <EditableElement
+                    sectionId={sectionId}
+                    elementId="sponsored_badge"
+                    elementType="text"
+                    label="Sponsored Badge"
+                    allowInlineEdit
+                    inlineTextValue={sponsoredBadge}
+                    onCommitInlineText={(val) => onCommitInlineText?.('sponsored_badge', val)}
+                  >
+                    <span className="inline-block text-[8px] font-semibold uppercase tracking-[0.22em] text-[#C06050] bg-[#FCECE8] px-2 py-0.5 rounded-2xs mb-2">
+                      {sponsoredBadge}
+                    </span>
+                  </EditableElement>
+
+                  <EditableElement
+                    sectionId={sectionId}
+                    elementId="sponsored_title"
+                    elementType="heading"
+                    label="Sponsored Headline"
+                    isOverridden={Boolean(sponsoredTitle)}
+                    allowInlineEdit
+                    inlineTextValue={effectiveSponsoredTitle}
+                    onCommitInlineText={(val) => onCommitInlineText?.('sponsored_title', val)}
+                  >
+                    <Link href={isEditorMode ? '#' : `/stories/${sponsoredArticle.slug}`} className="block">
+                      <h3 className="font-serif-editorial text-[22px] lg:text-[24px] xl:text-[26px] leading-[1.1] text-[#25221F] font-normal group-hover:text-[#A94F42] transition-colors">
+                        {effectiveSponsoredTitle}
+                      </h3>
+                    </Link>
+                  </EditableElement>
+
+                  <EditableElement
+                    sectionId={sectionId}
+                    elementId="sponsored_excerpt"
+                    elementType="text"
+                    label="Sponsored Excerpt"
+                    isOverridden={Boolean(sponsoredExcerpt)}
+                    allowInlineEdit
+                    inlineTextValue={effectiveSponsoredExcerpt || ''}
+                    onCommitInlineText={(val) => onCommitInlineText?.('sponsored_excerpt', val)}
+                    className="mt-2.5"
+                  >
+                    <p className="text-[10px] lg:text-[10.5px] text-[#55504A] leading-[1.45] line-clamp-4 font-normal">
+                      {effectiveSponsoredExcerpt}
+                    </p>
+                  </EditableElement>
+                </div>
+
+                <div className="pt-3">
+                  <Link
+                    href={isEditorMode ? '#' : `/stories/${sponsoredArticle.slug}`}
+                    className="inline-flex items-center text-[8.5px] lg:text-[8.5px] uppercase tracking-[0.2em] font-semibold text-[#25221F] group-hover:text-[#A94F42] transition-colors"
+                  >
+                    <span>Read Feature</span>
+                    <ArrowIcon />
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
+          </EditableElement>
 
           {/* =======================================================================
-              RIGHT BLOCK: ADVERTISEMENT PANEL
-              Warm beige panel (#EFE9DF) with khaki badge, centered copy & right image
+              RIGHT BLOCK: ADVERTISEMENT PANEL (SLOT 1)
               ======================================================================= */}
-          <div className="bg-[#EFE9DF] flex flex-row items-stretch group overflow-hidden border border-[#E2DBD0]">
-            {/* Left Copy Column (Centered Brand Identity) */}
-            <div className="flex-1 flex flex-col justify-between p-5 lg:p-6">
-              {/* Badge: Solid khaki/olive rectangle with white text */}
-              <div>
-                <span className="inline-block text-[8px] lg:text-[8.5px] font-semibold uppercase tracking-[0.22em] text-[#FAF8F5] bg-[#6C6652] px-3 py-1">
-                  Advertisement
-                </span>
-              </div>
+          <EditableElement
+            sectionId={sectionId}
+            elementId="slot_1"
+            elementType="slot"
+            label="Slot 2 (Advertisement Panel)"
+            className="flex-1"
+          >
+            <div className="bg-[#FAF8F5] border border-[#D8D1C5]/70 p-5 lg:p-6 flex flex-row items-stretch justify-between relative group shadow-2xs h-full">
+              <span className="absolute top-2 right-3 text-[7.5px] uppercase tracking-[0.2em] text-[#88837C] font-mono pointer-events-none">
+                {isSlot2Editorial ? 'EDITORIAL' : 'ADVERTISEMENT'}
+              </span>
 
-              {/* Centered Typography & Button */}
-              <div className="my-auto flex flex-col items-center text-center py-4 px-2">
-                <h4 className="font-serif-editorial text-[28px] lg:text-[32px] xl:text-[35px] tracking-[0.08em] text-[#25221F] uppercase font-normal leading-[1.08]">
-                  Fashion<br />Spectrum
-                </h4>
-
-                <p className="text-[10px] lg:text-[10.5px] uppercase tracking-[0.22em] text-[#5E584E] font-medium leading-relaxed mt-3 max-w-[220px]">
-                  Effortless Kaftans<br />For Every Occasion
-                </p>
-
-                <div className="mt-5">
-                  <a
-                    href={adCreative.destination_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center text-[9px] lg:text-[9.5px] font-semibold uppercase tracking-[0.2em] text-[#25221F] border border-[#25221F] bg-transparent px-5 py-2 hover:bg-[#25221F] hover:text-[#FAF8F5] transition-colors gap-1.5"
+              {/* Left Copy Container */}
+              <div className="flex-1 flex flex-col justify-between pr-4 lg:pr-6 py-1">
+                <div>
+                  <EditableElement
+                    sectionId={sectionId}
+                    elementId="ad_sponsor_name"
+                    elementType="text"
+                    label="Ad Sponsor"
+                    allowInlineEdit
+                    inlineTextValue={effectiveAdSponsor}
+                    onCommitInlineText={(val) => onCommitInlineText?.('ad_sponsor_name', val)}
                   >
-                    Shop The Collection <ArrowIcon />
-                  </a>
+                    <span className="text-[8.5px] uppercase tracking-[0.24em] font-bold text-[#25221F] block mb-2 font-mono">
+                      {effectiveAdSponsor}
+                    </span>
+                  </EditableElement>
+
+                  <EditableElement
+                    sectionId={sectionId}
+                    elementId="ad_headline"
+                    elementType="heading"
+                    label="Ad Headline"
+                    allowInlineEdit
+                    inlineTextValue={effectiveAdHeadline}
+                    onCommitInlineText={(val) => onCommitInlineText?.('ad_headline', val)}
+                  >
+                    <h4 className="font-serif-editorial text-[20px] lg:text-[23px] xl:text-[25px] leading-[1.12] text-[#25221F] font-normal tracking-[-0.01em]">
+                      {effectiveAdHeadline}
+                    </h4>
+                  </EditableElement>
+
+                  {effectiveAdCopy && (
+                    <EditableElement
+                      sectionId={sectionId}
+                      elementId="ad_copy"
+                      elementType="text"
+                      label="Ad Description"
+                      allowInlineEdit
+                      inlineTextValue={effectiveAdCopy}
+                      onCommitInlineText={(val) => onCommitInlineText?.('ad_copy', val)}
+                      className="mt-2.5"
+                    >
+                      <p className="text-[10px] lg:text-[10.5px] text-[#605B54] leading-[1.45] line-clamp-3">
+                        {effectiveAdCopy}
+                      </p>
+                    </EditableElement>
+                  )}
+                </div>
+
+                <div className="pt-4">
+                  <EditableElement
+                    sectionId={sectionId}
+                    elementId="ad_cta"
+                    elementType="cta"
+                    label="Ad CTA Button"
+                  >
+                    <a
+                      href={isEditorMode ? '#' : effectiveAdUrl}
+                      target={isEditorMode ? undefined : '_blank'}
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center text-[8.5px] uppercase tracking-[0.18em] font-semibold text-[#25221F] border border-[#25221F] px-4 py-2 hover:bg-[#25221F] hover:text-[#FAF8F5] transition-colors"
+                    >
+                      <span>{effectiveAdCtaLabel}</span>
+                      <ArrowIcon />
+                    </a>
+                  </EditableElement>
                 </div>
               </div>
 
-              {/* Bottom balance spacing */}
-              <div className="h-4" aria-hidden="true" />
+              {/* Right Product Creative Image */}
+              <EditableElement
+                sectionId={sectionId}
+                elementId="ad_desktop_image"
+                elementType="image"
+                label="Ad Creative Image"
+                isOverridden={Boolean(adDesktopImage)}
+                className="relative w-[36%] lg:w-[38%] min-h-[300px] overflow-hidden bg-[#EFEAE0] shrink-0"
+              >
+                <a
+                  href={isEditorMode ? '#' : effectiveAdUrl}
+                  target={isEditorMode ? undefined : '_blank'}
+                  rel="noopener noreferrer"
+                  className="block w-full h-full"
+                >
+                  <Image
+                    src={effectiveAdImg}
+                    alt={effectiveAdHeadline}
+                    fill
+                    sizes="(max-width: 1280px) 20vw, 240px"
+                    className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                  />
+                </a>
+              </EditableElement>
             </div>
-
-            {/* Right Portrait Image */}
-            <a
-              href={adCreative.destination_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="relative w-[45%] self-stretch min-h-[350px] overflow-hidden bg-[#E5DFD4] block shrink-0"
-            >
-              <Image
-                src={adImg}
-                alt={adCreative.headline}
-                fill
-                sizes="(max-width: 1280px) 28vw, 340px"
-                className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
-                priority
-                unoptimized
-              />
-            </a>
-          </div>
-
+          </EditableElement>
         </div>
 
         {/* =========================================================================
-            MOBILE VIEW (< md): Vertical Flow
+            MOBILE LAYOUT (< md)
+            Full mobile presentation of both the sponsored story and the advertisement
+            with independent mobile creative images and editable element bindings.
             ========================================================================= */}
-        <div className="md:hidden flex flex-col divide-y divide-[#D8D1C5]/70 w-full">
-          {/* Card 1: Sponsored Editorial */}
-          <div className="pb-6 grid grid-cols-12 gap-3.5 group">
-            <Link
-              href={`/stories/${sponsoredArticle.slug}`}
-              className="col-span-5 relative min-h-[190px] overflow-hidden bg-[#EFEAE0] block"
-            >
-              <Image
-                src={sponsoredImg}
-                alt={sponsoredArticle.title}
-                fill
-                sizes="42vw"
-                className="object-cover object-center"
-                unoptimized
-              />
-            </Link>
-
-            <div className="col-span-7 flex flex-col justify-between py-0.5">
-              <div>
-                <span className="inline-block text-[8px] font-bold uppercase tracking-[0.2em] text-[#C55757] bg-[#FCE5E2] px-2 py-0.5">
-                  Sponsored Editorial
+        <div className={forcedViewport === 'mobile' ? 'flex flex-col space-y-8' : (forcedViewport ? 'hidden' : 'md:hidden flex flex-col space-y-8')}>
+          {/* Mobile Sponsored Story */}
+          <EditableElement
+            sectionId={sectionId}
+            elementId="slot_0"
+            elementType="slot"
+            label="Slot 1 (Sponsored Editorial)"
+          >
+            <div className="flex flex-col space-y-3">
+              <EditableElement
+                sectionId={sectionId}
+                elementId="sponsored_badge"
+                elementType="text"
+                label="Sponsored Badge"
+                allowInlineEdit
+                inlineTextValue={sponsoredBadge}
+                onCommitInlineText={(val) => onCommitInlineText?.('sponsored_badge', val)}
+              >
+                <span className="inline-block text-[8px] font-semibold uppercase tracking-[0.22em] text-[#C06050] bg-[#FCECE8] px-2 py-0.5 rounded-2xs w-fit">
+                  {sponsoredBadge}
                 </span>
-                <Link href={`/stories/${sponsoredArticle.slug}`} className="block mt-2">
-                  <h3 className="font-serif-editorial text-[19px] font-normal leading-[1.15] text-[#25221F]">
-                    <span className="text-[#C55757] italic">The Art</span> of Resort Living with Fashion Spectrum
-                  </h3>
-                </Link>
-                <p className="text-[11px] text-[#6A655F] leading-snug mt-1.5 line-clamp-3 font-light">
-                  {sponsoredArticle.excerpt}
+              </EditableElement>
+
+              <EditableElement
+                sectionId={sectionId}
+                elementId="sponsored_title"
+                elementType="heading"
+                label="Sponsored Headline"
+                isOverridden={Boolean(sponsoredTitle)}
+                allowInlineEdit
+                inlineTextValue={effectiveSponsoredTitle}
+                onCommitInlineText={(val) => onCommitInlineText?.('sponsored_title', val)}
+              >
+                <h3 className="font-serif-editorial text-2xl text-[#25221F] font-normal leading-tight">
+                  {effectiveSponsoredTitle}
+                </h3>
+              </EditableElement>
+
+              <EditableElement
+                sectionId={sectionId}
+                elementId="sponsored_image"
+                elementType="image"
+                label="Sponsored Image (Mobile)"
+                isOverridden={Boolean(sponsoredMobileImage || sponsoredImage)}
+                className="relative w-full aspect-[4/3] bg-[#EFEAE0] overflow-hidden"
+              >
+                <Image
+                  src={effectiveSponsoredMobileImg}
+                  alt={effectiveSponsoredTitle}
+                  fill
+                  sizes="100vw"
+                  className="object-cover"
+                />
+              </EditableElement>
+
+              {effectiveSponsoredExcerpt && (
+                <p className="text-xs text-[#55504A] leading-relaxed line-clamp-3">
+                  {effectiveSponsoredExcerpt}
                 </p>
-              </div>
-              <div className="pt-2.5">
+              )}
+
+              <div>
                 <Link
-                  href={`/stories/${sponsoredArticle.slug}`}
-                  className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#25221F] inline-flex items-center"
+                  href={isEditorMode ? '#' : `/stories/${sponsoredArticle.slug}`}
+                  className="inline-flex items-center text-[8.5px] uppercase tracking-[0.2em] font-semibold text-[#25221F]"
                 >
-                  Read More <ArrowIcon />
+                  <span>Read Story</span>
+                  <ArrowIcon />
                 </Link>
               </div>
             </div>
-          </div>
+          </EditableElement>
 
-          {/* Card 2: Advertisement */}
-          <div className="pt-6">
-            <div className="bg-[#EFE9DF] border border-[#E2DBD0] overflow-hidden">
-              <div className="p-4">
-                <span className="inline-block text-[7.5px] font-semibold uppercase tracking-[0.22em] text-[#FAF8F5] bg-[#6C6652] px-2.5 py-0.5">
-                  Advertisement
+          {/* Mobile Advertisement Card */}
+          <EditableElement
+            sectionId={sectionId}
+            elementId="slot_1"
+            elementType="slot"
+            label="Slot 2 (Advertisement Panel)"
+          >
+            <div className="p-5 bg-[#F4EFE6] border border-[#D8D1C5] flex flex-col space-y-3.5">
+              <EditableElement
+                sectionId={sectionId}
+                elementId="ad_sponsor_name"
+                elementType="text"
+                label="Ad Sponsor"
+                allowInlineEdit
+                inlineTextValue={effectiveAdSponsor}
+                onCommitInlineText={(val) => onCommitInlineText?.('ad_sponsor_name', val)}
+              >
+                <span className="text-[8.5px] uppercase tracking-[0.22em] font-bold text-[#25221F] block font-mono">
+                  {effectiveAdSponsor}
                 </span>
-              </div>
+              </EditableElement>
 
-              <div className="grid grid-cols-12 gap-3 items-center px-4 pb-4">
-                <div className="col-span-7 flex flex-col items-center text-center py-2">
-                  <h4 className="font-serif-editorial text-[20px] tracking-[0.06em] text-[#25221F] uppercase font-normal leading-tight">
-                    Fashion Spectrum
-                  </h4>
-                  <p className="text-[9.5px] uppercase tracking-[0.18em] text-[#5E584E] font-medium leading-relaxed mt-1.5">
-                    Effortless Kaftans For Every Occasion
-                  </p>
-                  <div className="mt-3">
-                    <a
-                      href={adCreative.destination_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center text-[8.5px] font-semibold uppercase tracking-[0.18em] text-[#25221F] border border-[#25221F] px-3 py-1.5 hover:bg-[#25221F] hover:text-[#FAF8F5] transition-colors"
-                    >
-                      Shop The Collection <ArrowIcon />
-                    </a>
-                  </div>
-                </div>
+              <EditableElement
+                sectionId={sectionId}
+                elementId="ad_headline"
+                elementType="heading"
+                label="Ad Headline"
+                allowInlineEdit
+                inlineTextValue={effectiveAdHeadline}
+                onCommitInlineText={(val) => onCommitInlineText?.('ad_headline', val)}
+              >
+                <h4 className="font-serif-editorial text-xl leading-tight text-[#25221F] font-normal">
+                  {effectiveAdHeadline}
+                </h4>
+              </EditableElement>
 
-                <div className="col-span-5">
-                  <a
-                    href={adCreative.destination_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="relative block w-full aspect-[4/5] overflow-hidden bg-[#E5DFD4]"
-                  >
-                    <Image
-                      src={adImg}
-                      alt={adCreative.headline}
-                      fill
-                      sizes="38vw"
-                      className="object-cover"
-                      unoptimized
-                    />
-                  </a>
-                </div>
+              <EditableElement
+                sectionId={sectionId}
+                elementId="ad_desktop_image"
+                elementType="image"
+                label="Ad Creative Image (Mobile)"
+                isOverridden={Boolean(adMobileImage || adDesktopImage)}
+                className="relative w-full aspect-[16/9] overflow-hidden bg-[#EFEAE0]"
+              >
+                <a
+                  href={isEditorMode ? '#' : effectiveAdUrl}
+                  target={isEditorMode ? undefined : '_blank'}
+                  rel="noopener noreferrer"
+                  className="block w-full h-full"
+                >
+                  <Image
+                    src={effectiveAdMobileImg}
+                    alt={effectiveAdHeadline}
+                    fill
+                    sizes="100vw"
+                    className="object-cover"
+                  />
+                </a>
+              </EditableElement>
+
+              {effectiveAdCopy && (
+                <p className="text-xs text-[#605B54] leading-relaxed line-clamp-3">
+                  {effectiveAdCopy}
+                </p>
+              )}
+
+              <div>
+                <a
+                  href={isEditorMode ? '#' : effectiveAdUrl}
+                  target={isEditorMode ? undefined : '_blank'}
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-[8.5px] uppercase tracking-[0.18em] font-semibold text-[#25221F] border border-[#25221F] px-4 py-2 hover:bg-[#25221F] hover:text-[#FAF8F5] transition-colors"
+                >
+                  <span>{effectiveAdCtaLabel}</span>
+                  <ArrowIcon />
+                </a>
               </div>
             </div>
-          </div>
+          </EditableElement>
         </div>
-
       </div>
     </section>
   );

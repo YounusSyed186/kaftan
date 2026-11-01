@@ -4,7 +4,7 @@ import Link from 'next/link';
 export function Footer() {
   return (
     <footer className="w-full bg-[#EFEAE0] border-t border-[#D8D1C5] mt-6 md:mt-10 pt-10 md:pt-14 pb-10">
-      <div className="w-full px-[21px] lg:px-6">
+      <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 pb-12 border-b border-[#D8D1C5]">
           {/* Col 1: Brand & Publication Details */}
           <div className="space-y-4 md:col-span-1">
@@ -46,6 +46,9 @@ export function Footer() {
               </li>
               <li>
                 <Link href="/sale" className="text-[#B44238] font-semibold hover:text-[#8f322a]">Clearance Sale</Link>
+              </li>
+              <li>
+                <Link href="/competitions" className="hover:text-[#25221F]">Competitions &amp; Giveaways</Link>
               </li>
             </ul>
           </div>

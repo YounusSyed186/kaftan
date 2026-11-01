@@ -1,7 +1,15 @@
 import type { Metadata } from 'next';
-import { FALLBACK_ARTICLES, FALLBACK_COMPETITION, FALLBACK_AD_CREATIVE } from '@/lib/supabase/fallback-data';
+import { getAllPublishedArticles } from '@/services/articles';
 import { getAllProducts } from '@/services/products';
 import { getHomepageSections } from '@/services/homepage';
+import { getActiveCompetition } from '@/services/competitions';
+import { getEligibleAdCreative } from '@/services/advertising';
+import {
+  FALLBACK_ARTICLES,
+  FALLBACK_PRODUCTS,
+  FALLBACK_COMPETITION,
+  FALLBACK_AD_CREATIVE,
+} from '@/lib/supabase/fallback-data';
 import { AdminDashboardClient } from '@/components/admin/AdminDashboardClient';
 
 export const metadata: Metadata = {
@@ -10,18 +18,21 @@ export const metadata: Metadata = {
 };
 
 export default async function AdminDashboardPage() {
-  const [products, sections] = await Promise.all([
+  const [articles, products, sections, competition, adCreative] = await Promise.all([
+    getAllPublishedArticles(),
     getAllProducts(),
     getHomepageSections(),
+    getActiveCompetition(),
+    getEligibleAdCreative(),
   ]);
 
   return (
     <AdminDashboardClient
-      initialArticles={FALLBACK_ARTICLES}
-      initialProducts={products}
+      initialArticles={articles && articles.length > 0 ? articles : FALLBACK_ARTICLES}
+      initialProducts={products && products.length > 0 ? products : FALLBACK_PRODUCTS}
       initialSections={sections}
-      initialCompetition={FALLBACK_COMPETITION}
-      initialAdCreative={FALLBACK_AD_CREATIVE}
+      initialCompetition={competition || FALLBACK_COMPETITION}
+      initialAdCreative={adCreative || FALLBACK_AD_CREATIVE}
     />
   );
 }

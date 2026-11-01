@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { buildCloudinaryUrl } from '@/lib/cloudinary/url';
 
 export interface CategoryItem {
   id: string;
@@ -16,37 +17,37 @@ const DEFAULT_CATEGORIES: CategoryItem[] = [
     id: 'cat-1',
     name: 'Resortwear',
     href: '/trends',
-    imageSrc: '/images/categories/resortwear.jpg',
+    imageSrc: 'kaftan/categories/resortwear',
   },
   {
     id: 'cat-2',
     name: 'Occasion Wear',
     href: '/style',
-    imageSrc: '/images/categories/occasion-wear.jpg',
+    imageSrc: 'kaftan/categories/occasion-wear',
   },
   {
     id: 'cat-3',
     name: 'Australian Designers',
     href: '/designers',
-    imageSrc: '/images/categories/australian-designers.jpg',
+    imageSrc: 'kaftan/categories/australian-designers',
   },
   {
     id: 'cat-4',
     name: 'Sustainable Fashion',
     href: '/lifestyle',
-    imageSrc: '/images/categories/sustainable-fashion.jpg',
+    imageSrc: 'kaftan/categories/sustainable-fashion',
   },
   {
     id: 'cat-5',
     name: 'Street Style',
     href: '/trends',
-    imageSrc: '/images/categories/street-style.jpg',
+    imageSrc: 'kaftan/categories/street-style',
   },
   {
     id: 'cat-6',
     name: 'Accessories',
     href: '/lifestyle',
-    imageSrc: '/images/categories/accessories.jpg',
+    imageSrc: 'kaftan/categories/accessories',
   },
 ];
 
@@ -56,7 +57,8 @@ interface VisualCategoryStripProps {
 
 export function VisualCategoryStrip({ categories = DEFAULT_CATEGORIES }: VisualCategoryStripProps) {
   return (
-    <section aria-label="Fashion Categories" className="w-full px-[21px] lg:px-6 py-5 md:py-6 border-b border-[#D8D1C5]/60 bg-[#FAF8F5]">
+    <section aria-label="Fashion Categories" className="w-full py-5 md:py-6 border-b border-[#D8D1C5]/60 bg-[#FAF8F5]">
+      <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10">
       {/* =========================================================================
           DESKTOP: 6 EQUAL COLUMNS GRID (>= md)
           ========================================================================= */}
@@ -69,7 +71,7 @@ export function VisualCategoryStrip({ categories = DEFAULT_CATEGORIES }: VisualC
           >
             <div className="relative w-full aspect-[4/3] overflow-hidden bg-[#EFEAE0] border border-[#D8D1C5]/50 shadow-sm transition-all duration-300 group-hover:border-[#A94F42]/40">
               <Image
-                src={cat.imageSrc}
+                src={buildCloudinaryUrl(cat.imageSrc, { width: 400 })}
                 alt={cat.name}
                 fill
                 sizes="(max-width: 1024px) 16vw, 14vw"
@@ -86,7 +88,7 @@ export function VisualCategoryStrip({ categories = DEFAULT_CATEGORIES }: VisualC
       {/* =========================================================================
           MOBILE: HORIZONTALLY SCROLLABLE CAROUSEL (< md)
           ========================================================================= */}
-      <div className="md:hidden flex overflow-x-auto snap-x snap-mandatory space-x-3 pb-1 -mx-[21px] px-[21px] scrollbar-none">
+      <div className="md:hidden flex overflow-x-auto snap-x snap-mandatory space-x-3 pb-1 -mx-4 sm:-mx-6 px-4 sm:px-6 scrollbar-none">
         {categories.map((cat) => (
           <Link
             key={cat.id}
@@ -95,7 +97,7 @@ export function VisualCategoryStrip({ categories = DEFAULT_CATEGORIES }: VisualC
           >
             <div className="relative w-full aspect-[4/3] overflow-hidden bg-[#EFEAE0] border border-[#D8D1C5]/50 shadow-sm">
               <Image
-                src={cat.imageSrc}
+                src={buildCloudinaryUrl(cat.imageSrc, { width: 400 })}
                 alt={cat.name}
                 fill
                 sizes="148px"
@@ -107,6 +109,7 @@ export function VisualCategoryStrip({ categories = DEFAULT_CATEGORIES }: VisualC
             </span>
           </Link>
         ))}
+      </div>
       </div>
     </section>
   );

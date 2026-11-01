@@ -11,8 +11,14 @@ export type NavigationItemRow = Database['public']['Tables']['navigation_items']
 export type AdPlacementRow = Database['public']['Tables']['ad_placements']['Row'];
 export type AdCreativeRow = Database['public']['Tables']['ad_creatives']['Row'];
 export type CompetitionRow = Database['public']['Tables']['competitions']['Row'];
+export type CompetitionPrizeRow = Database['public']['Tables']['competition_prizes']['Row'];
+export type CompetitionEntryRow = Database['public']['Tables']['competition_entries']['Row'];
 export type SponsorRow = Database['public']['Tables']['sponsors']['Row'];
 export type CampaignRow = Database['public']['Tables']['campaigns']['Row'];
+
+export interface PopulatedCompetition extends CompetitionRow {
+  prizes?: CompetitionPrizeRow[];
+}
 
 export interface PopulatedArticle extends ArticleRow {
   author?: AuthorRow | null;
@@ -48,4 +54,23 @@ export interface PopulatedHomepageSection extends HomepageSectionRow {
 
 export interface PopulatedNavigationItem extends NavigationItemRow {
   children?: PopulatedNavigationItem[];
+}
+
+
+export interface HomepageRevision {
+  id: string;
+  revision_number: number;
+  status: 'draft' | 'published' | 'archived';
+  snapshot: {
+    sections: PopulatedHomepageSection[];
+    metadata?: {
+      schemaVersion: number;
+      exportedAt?: string;
+      notes?: string;
+    };
+  };
+  notes?: string | null;
+  created_by?: string | null;
+  created_at: string;
+  published_at?: string | null;
 }

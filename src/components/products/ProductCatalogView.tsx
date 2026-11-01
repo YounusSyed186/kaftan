@@ -3,6 +3,7 @@
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { buildCloudinaryUrl } from '@/lib/cloudinary/url';
 import type { PopulatedProduct } from '@/types/models';
 
 interface ProductCatalogViewProps {
@@ -114,8 +115,8 @@ export function ProductCatalogView({
   return (
     <div className="w-full">
       {/* Editorial Header */}
-      <div className="bg-[#FAF8F5] border-b border-[#D8D1C5]/60 pt-10 pb-8 px-[21px] lg:px-6">
-        <div className="max-w-[1400px] mx-auto">
+      <div className="bg-[#FAF8F5] border-b border-[#D8D1C5]/60 pt-10 pb-8">
+        <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10">
           {/* Breadcrumb */}
           <nav aria-label="Breadcrumb" className="flex items-center space-x-2 text-[10px] uppercase tracking-[0.2em] text-[#77716A] mb-4">
             <Link href="/" className="hover:text-[#25221F] transition-colors">
@@ -160,7 +161,7 @@ export function ProductCatalogView({
 
       {/* Control & Filter Toolbar */}
       <div className="bg-[#FFFEFA] border-b border-[#D8D1C5]/60 sticky top-0 z-20 shadow-xs">
-        <div className="max-w-[1400px] mx-auto px-[21px] lg:px-6 py-4 space-y-4">
+        <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 py-4 space-y-4">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             {/* Search Input */}
             <div className="relative flex-1 max-w-md">
@@ -264,7 +265,7 @@ export function ProductCatalogView({
       </div>
 
       {/* Product Catalog Grid */}
-      <div className="max-w-[1400px] mx-auto px-[21px] lg:px-6 py-10">
+      <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 py-10">
         {filteredProducts.length === 0 ? (
           <div className="bg-[#FFFEFA] border border-[#D8D1C5] p-12 text-center space-y-4 max-w-md mx-auto my-12">
             <span className="text-3xl block">✦</span>
@@ -298,7 +299,7 @@ export function ProductCatalogView({
                   <div className="relative w-full aspect-[3/4] overflow-hidden bg-[#EFEAE0] border border-[#D8D1C5]/30">
                     <Link href={`/products/${product.slug}`} className="block w-full h-full">
                       <Image
-                        src={product.image?.storage_key || '/images/products/azure-resort-kaftan.jpg'}
+                        src={buildCloudinaryUrl(product.image?.storage_key || 'kaftan/products/azure-resort-kaftan', { width: 800 })}
                         alt={product.name}
                         fill
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
@@ -412,7 +413,7 @@ export function ProductCatalogView({
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-center">
               <div className="relative aspect-[3/4] overflow-hidden bg-[#EFEAE0] border border-[#D8D1C5]/50">
                 <Image
-                  src={quickViewProduct.image?.storage_key || '/images/products/azure-resort-kaftan.jpg'}
+                  src={buildCloudinaryUrl(quickViewProduct.image?.storage_key || 'kaftan/products/azure-resort-kaftan', { width: 1000 })}
                   alt={quickViewProduct.name}
                   fill
                   className="object-cover"

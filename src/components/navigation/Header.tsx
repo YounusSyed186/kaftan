@@ -45,7 +45,7 @@ export function Header({ navigationItems }: HeaderProps) {
       {/* =========================================================================
           DESKTOP MASTHEAD (hidden on small screens)
           ========================================================================= */}
-      <div className="hidden md:block w-full px-[21px] lg:px-6 pt-3 pb-2.5">
+      <div className="hidden md:block w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 pt-3 pb-2.5">
         <div className="grid grid-cols-3 items-center">
           {/* Left: Region & Date */}
           <div className="flex flex-col text-[8.5px] uppercase tracking-[0.24em] text-[#77716A] leading-tight">
@@ -89,7 +89,7 @@ export function Header({ navigationItems }: HeaderProps) {
 
       {/* Desktop Navigation Row */}
       <div className="hidden md:block border-t border-b border-[#D8D1C5]">
-        <div className="w-full px-[21px] lg:px-6 h-[46px] flex items-center justify-between">
+        <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 h-[46px] flex items-center justify-between">
           <button
             onClick={openMobileDrawer}
             aria-label="Open menu drawer"
@@ -130,7 +130,7 @@ export function Header({ navigationItems }: HeaderProps) {
       {/* =========================================================================
           MOBILE MASTHEAD
           ========================================================================= */}
-      <div className="md:hidden h-11 px-4 flex items-center justify-between border-b border-[#D8D1C5]">
+      <div className="md:hidden h-11 px-4 sm:px-6 flex items-center justify-between border-b border-[#D8D1C5]">
         <button
           onClick={openMobileDrawer}
           aria-label="Open navigation menu"

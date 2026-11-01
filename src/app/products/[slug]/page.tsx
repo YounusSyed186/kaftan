@@ -41,7 +41,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
     <main className="min-h-screen bg-[#FAF8F5]">
       {/* Top Breadcrumb Navigation */}
       <div className="border-b border-[#D8D1C5]/60 bg-[#FFFEFA]">
-        <div className="max-w-[1400px] mx-auto px-[21px] lg:px-6 py-3.5">
+        <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 py-3.5">
           <nav aria-label="Breadcrumb" className="flex items-center space-x-2 text-[10.5px] uppercase tracking-[0.2em] text-[#77716A]">
             <Link href="/" className="hover:text-[#25221F] transition-colors">
               Home
@@ -61,7 +61,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
       </div>
 
       {/* Main Content */}
-      <div className="max-w-[1400px] mx-auto px-[21px] lg:px-6 py-8 md:py-12">
+      <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 py-8 md:py-12">
         <ProductDetailInteractive product={product} relatedProducts={relatedProducts} />
       </div>
     </main>

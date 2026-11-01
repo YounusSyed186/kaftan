@@ -1,0 +1,250 @@
+{
+  "/images/editorial/ad-fashion-spectrum.jpg": {
+    "public_id": "kaftan/editorial/ad-fashion-spectrum",
+    "secure_url": "https://res.cloudinary.com/dpe842p8v/image/upload/v1793498362/kaftan/editorial/ad-fashion-spectrum.jpg",
+    "width": 896,
+    "height": 1200,
+    "bytes": 1004176,
+    "format": "jpg"
+  },
+  "/images/editorial/competition-strawhat-beach.jpg": {
+    "public_id": "kaftan/editorial/competition-strawhat-beach",
+    "secure_url": "https://res.cloudinary.com/dpe842p8v/image/upload/v1793498362/kaftan/editorial/competition-strawhat-beach.jpg",
+    "width": 1376,
+    "height": 768,
+    "bytes": 781285,
+    "format": "jpg"
+  },
+  "/images/editorial/effortless-dressing.jpg": {
+    "public_id": "kaftan/editorial/effortless-dressing",
+    "secure_url": "https://res.cloudinary.com/dpe842p8v/image/upload/v1793498363/kaftan/editorial/effortless-dressing.jpg",
+    "width": 896,
+    "height": 1200,
+    "bytes": 773209,
+    "format": "jpg"
+  },
+  "/images/editorial/hero-mediterranean-resortwear.jpg": {
+    "public_id": "kaftan/editorial/hero-mediterranean-resortwear",
+    "secure_url": "https://res.cloudinary.com/dpe842p8v/image/upload/v1793498364/kaftan/editorial/hero-mediterranean-resortwear.jpg",
+    "width": 2400,
+    "height": 1600,
+    "bytes": 929421,
+    "format": "jpg"
+  },
+  "/images/editorial/hero-modern-elegance.jpg": {
+    "public_id": "kaftan/editorial/hero-modern-elegance",
+    "secure_url": "https://res.cloudinary.com/dpe842p8v/image/upload/v1793498365/kaftan/editorial/hero-modern-elegance.jpg",
+    "width": 2400,
+    "height": 1600,
+    "bytes": 929421,
+    "format": "jpg"
+  },
+  "/images/editorial/more-accessories.jpg": {
+    "public_id": "kaftan/editorial/more-accessories",
+    "secure_url": "https://res.cloudinary.com/dpe842p8v/image/upload/v1793498366/kaftan/editorial/more-accessories.jpg",
+    "width": 800,
+    "height": 500,
+    "bytes": 62640,
+    "format": "jpg"
+  },
+  "/images/editorial/more-bec-bridge.jpg": {
+    "public_id": "kaftan/editorial/more-bec-bridge",
+    "secure_url": "https://res.cloudinary.com/dpe842p8v/image/upload/v1793498366/kaftan/editorial/more-bec-bridge.jpg",
+    "width": 800,
+    "height": 500,
+    "bytes": 57385,
+    "format": "jpg"
+  },
+  "/images/editorial/more-conscious-wardrobe.jpg": {
+    "public_id": "kaftan/editorial/more-conscious-wardrobe",
+    "secure_url": "https://res.cloudinary.com/dpe842p8v/image/upload/v1793498367/kaftan/editorial/more-conscious-wardrobe.jpg",
+    "width": 800,
+    "height": 500,
+    "bytes": 50930,
+    "format": "jpg"
+  },
+  "/images/editorial/more-emerging-talent.jpg": {
+    "public_id": "kaftan/editorial/more-emerging-talent",
+    "secure_url": "https://res.cloudinary.com/dpe842p8v/image/upload/v1793498368/kaftan/editorial/more-emerging-talent.jpg",
+    "width": 800,
+    "height": 500,
+    "bytes": 41041,
+    "format": "jpg"
+  },
+  "/images/editorial/next-getaway.jpg": {
+    "public_id": "kaftan/editorial/next-getaway",
+    "secure_url": "https://res.cloudinary.com/dpe842p8v/image/upload/v1793498368/kaftan/editorial/next-getaway.jpg",
+    "width": 896,
+    "height": 1200,
+    "bytes": 1143155,
+    "format": "jpg"
+  },
+  "/images/editorial/redefining-fashion.jpg": {
+    "public_id": "kaftan/editorial/redefining-fashion",
+    "secure_url": "https://res.cloudinary.com/dpe842p8v/image/upload/v1793498369/kaftan/editorial/redefining-fashion.jpg",
+    "width": 848,
+    "height": 1264,
+    "bytes": 891889,
+    "format": "jpg"
+  },
+  "/images/editorial/sponsored-resort-living.jpg": {
+    "public_id": "kaftan/editorial/sponsored-resort-living",
+    "secure_url": "https://res.cloudinary.com/dpe842p8v/image/upload/v1793498370/kaftan/editorial/sponsored-resort-living.jpg",
+    "width": 896,
+    "height": 1200,
+    "bytes": 1076534,
+    "format": "jpg"
+  },
+  "/images/editorial/story-australian-labels.jpg": {
+    "public_id": "kaftan/editorial/story-australian-labels",
+    "secure_url": "https://res.cloudinary.com/dpe842p8v/image/upload/v1793498371/kaftan/editorial/story-australian-labels.jpg",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 678244,
+    "format": "jpg"
+  },
+  "/images/editorial/story-capsule-wardrobe.jpg": {
+    "public_id": "kaftan/editorial/story-capsule-wardrobe",
+    "secure_url": "https://res.cloudinary.com/dpe842p8v/image/upload/v1793498372/kaftan/editorial/story-capsule-wardrobe.jpg",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 696372,
+    "format": "jpg"
+  },
+  "/images/editorial/story-fashion-boutiques.jpg": {
+    "public_id": "kaftan/editorial/story-fashion-boutiques",
+    "secure_url": "https://res.cloudinary.com/dpe842p8v/image/upload/v1793498372/kaftan/editorial/story-fashion-boutiques.jpg",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 801788,
+    "format": "jpg"
+  },
+  "/images/editorial/story-resortwear-trends.jpg": {
+    "public_id": "kaftan/editorial/story-resortwear-trends",
+    "secure_url": "https://res.cloudinary.com/dpe842p8v/image/upload/v1793498373/kaftan/editorial/story-resortwear-trends.jpg",
+    "width": 1024,
+    "height": 1024,
+    "bytes": 1018814,
+    "format": "jpg"
+  },
+  "/images/editorial/warm-days-bolder-looks.jpg": {
+    "public_id": "kaftan/editorial/warm-days-bolder-looks",
+    "secure_url": "https://res.cloudinary.com/dpe842p8v/image/upload/v1793498374/kaftan/editorial/warm-days-bolder-looks.jpg",
+    "width": 1200,
+    "height": 896,
+    "bytes": 930171,
+    "format": "jpg"
+  },
+  "/images/products/azure-resort-kaftan.jpg": {
+    "public_id": "kaftan/products/azure-resort-kaftan",
+    "secure_url": "https://res.cloudinary.com/dpe842p8v/image/upload/v1793498375/kaftan/products/azure-resort-kaftan.jpg",
+    "width": 896,
+    "height": 1200,
+    "bytes": 961959,
+    "format": "jpg"
+  },
+  "/images/products/blush-print-kaftan.jpg": {
+    "public_id": "kaftan/products/blush-print-kaftan",
+    "secure_url": "https://res.cloudinary.com/dpe842p8v/image/upload/v1793498376/kaftan/products/blush-print-kaftan.jpg",
+    "width": 896,
+    "height": 1200,
+    "bytes": 964465,
+    "format": "jpg"
+  },
+  "/images/products/classic-black-kaftan.jpg": {
+    "public_id": "kaftan/products/classic-black-kaftan",
+    "secure_url": "https://res.cloudinary.com/dpe842p8v/image/upload/v1793498377/kaftan/products/classic-black-kaftan.jpg",
+    "width": 896,
+    "height": 1200,
+    "bytes": 741181,
+    "format": "jpg"
+  },
+  "/images/products/emerald-resort-kaftan.jpg": {
+    "public_id": "kaftan/products/emerald-resort-kaftan",
+    "secure_url": "https://res.cloudinary.com/dpe842p8v/image/upload/v1793498378/kaftan/products/emerald-resort-kaftan.jpg",
+    "width": 896,
+    "height": 1200,
+    "bytes": 1004202,
+    "format": "jpg"
+  },
+  "/images/products/mediterranean-straw-panama.jpg": {
+    "public_id": "kaftan/products/mediterranean-straw-panama",
+    "secure_url": "https://res.cloudinary.com/dpe842p8v/image/upload/v1793498378/kaftan/products/mediterranean-straw-panama.jpg",
+    "width": 1200,
+    "height": 896,
+    "bytes": 937782,
+    "format": "jpg"
+  },
+  "/images/products/monochrome-blazer-dress.jpg": {
+    "public_id": "kaftan/products/monochrome-blazer-dress",
+    "secure_url": "https://res.cloudinary.com/dpe842p8v/image/upload/v1793498379/kaftan/products/monochrome-blazer-dress.jpg",
+    "width": 896,
+    "height": 1200,
+    "bytes": 601930,
+    "format": "jpg"
+  },
+  "/images/products/solstice-gold-earrings.jpg": {
+    "public_id": "kaftan/products/solstice-gold-earrings",
+    "secure_url": "https://res.cloudinary.com/dpe842p8v/image/upload/v1793498380/kaftan/products/solstice-gold-earrings.jpg",
+    "width": 1200,
+    "height": 896,
+    "bytes": 1025001,
+    "format": "jpg"
+  },
+  "/images/products/terracotta-sunset-kaftan.jpg": {
+    "public_id": "kaftan/products/terracotta-sunset-kaftan",
+    "secure_url": "https://res.cloudinary.com/dpe842p8v/image/upload/v1793498381/kaftan/products/terracotta-sunset-kaftan.jpg",
+    "width": 896,
+    "height": 1200,
+    "bytes": 914060,
+    "format": "jpg"
+  },
+  "/images/categories/accessories.jpg": {
+    "public_id": "kaftan/categories/accessories",
+    "secure_url": "https://res.cloudinary.com/dpe842p8v/image/upload/v1793498381/kaftan/categories/accessories.jpg",
+    "width": 1200,
+    "height": 896,
+    "bytes": 1025001,
+    "format": "jpg"
+  },
+  "/images/categories/australian-designers.jpg": {
+    "public_id": "kaftan/categories/australian-designers",
+    "secure_url": "https://res.cloudinary.com/dpe842p8v/image/upload/v1793498382/kaftan/categories/australian-designers.jpg",
+    "width": 2400,
+    "height": 1600,
+    "bytes": 929421,
+    "format": "jpg"
+  },
+  "/images/categories/occasion-wear.jpg": {
+    "public_id": "kaftan/categories/occasion-wear",
+    "secure_url": "https://res.cloudinary.com/dpe842p8v/image/upload/v1793498383/kaftan/categories/occasion-wear.jpg",
+    "width": 896,
+    "height": 1200,
+    "bytes": 704271,
+    "format": "jpg"
+  },
+  "/images/categories/resortwear.jpg": {
+    "public_id": "kaftan/categories/resortwear",
+    "secure_url": "https://res.cloudinary.com/dpe842p8v/image/upload/v1793498384/kaftan/categories/resortwear.jpg",
+    "width": 1200,
+    "height": 896,
+    "bytes": 937782,
+    "format": "jpg"
+  },
+  "/images/categories/street-style.jpg": {
+    "public_id": "kaftan/categories/street-style",
+    "secure_url": "https://res.cloudinary.com/dpe842p8v/image/upload/v1793498385/kaftan/categories/street-style.jpg",
+    "width": 1200,
+    "height": 896,
+    "bytes": 820998,
+    "format": "jpg"
+  },
+  "/images/categories/sustainable-fashion.jpg": {
+    "public_id": "kaftan/categories/sustainable-fashion",
+    "secure_url": "https://res.cloudinary.com/dpe842p8v/image/upload/v1793498386/kaftan/categories/sustainable-fashion.jpg",
+    "width": 800,
+    "height": 1198,
+    "bytes": 526869,
+    "format": "jpg"
+  }
+}

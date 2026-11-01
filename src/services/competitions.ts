@@ -1,11 +1,39 @@
 import { createServerSupabaseClient } from '@/lib/supabase/server';
 import { hasSupabaseConfigured } from '@/lib/validation/env';
 import { FALLBACK_COMPETITION } from '@/lib/supabase/fallback-data';
-import type { CompetitionRow } from '@/types/models';
+import type { CompetitionRow, CompetitionPrizeRow, PopulatedCompetition } from '@/types/models';
 
-export async function getActiveCompetition(): Promise<CompetitionRow | null> {
+export const FALLBACK_PRIZES: CompetitionPrizeRow[] = [
+  {
+    id: 'prize-1',
+    competition_id: 'comp-1',
+    title: 'Grand Prize: Luxury Silk Kaftan of Choice',
+    description:
+      'Winner selects any full-length silk kaftan or resort tunic from the current Fashion Spectrum collection (valued up to $350 AUD).',
+    quantity: 1,
+    display_order: 1,
+    created_at: '',
+    updated_at: '',
+  },
+  {
+    id: 'prize-2',
+    competition_id: 'comp-1',
+    title: 'Runner-Up: Handcrafted Pure Silk Resort Scarf',
+    description:
+      'Two runners-up receive a pure silk printed resort scarf valued at $95 AUD each.',
+    quantity: 2,
+    display_order: 2,
+    created_at: '',
+    updated_at: '',
+  },
+];
+
+export async function getActiveCompetition(): Promise<PopulatedCompetition | null> {
   if (!hasSupabaseConfigured()) {
-    return FALLBACK_COMPETITION;
+    return {
+      ...FALLBACK_COMPETITION,
+      prizes: FALLBACK_PRIZES,
+    };
   }
 
   try {
@@ -13,18 +41,31 @@ export async function getActiveCompetition(): Promise<CompetitionRow | null> {
     const now = new Date().toISOString();
     const { data, error } = await supabase
       .from('competitions')
-      .select('*')
+      .select('*, competition_prizes(*)')
       .eq('status', 'active')
       .lte('start_time', now)
       .gte('end_time', now)
       .single();
 
     if (error || !data) {
-      return FALLBACK_COMPETITION;
+      return {
+        ...FALLBACK_COMPETITION,
+        prizes: FALLBACK_PRIZES,
+      };
     }
 
-    return data as CompetitionRow;
+    const comp = data as CompetitionRow & { competition_prizes?: CompetitionPrizeRow[] };
+    return {
+      ...comp,
+      prizes:
+        comp.competition_prizes && comp.competition_prizes.length > 0
+          ? comp.competition_prizes
+          : FALLBACK_PRIZES,
+    };
   } catch {
-    return FALLBACK_COMPETITION;
+    return {
+      ...FALLBACK_COMPETITION,
+      prizes: FALLBACK_PRIZES,
+    };
   }
 }

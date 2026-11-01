@@ -15,7 +15,7 @@ export function EditorialListing({
   articles,
 }: EditorialListingProps) {
   return (
-    <div className="w-full px-4 sm:px-5 lg:px-6 py-10 sm:py-12">
+    <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 py-10 sm:py-12">
       {/* Title Header */}
       <div className="pb-8 border-b border-[#D8D1C5] mb-10 flex flex-col items-center text-center space-y-2">
         <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#77716A]">

@@ -38,8 +38,10 @@ import {
   Sliders,
   PanelLeftClose,
   PanelLeftOpen,
-  ArrowUpRight
+  ArrowUpRight,
+  LogOut,
 } from 'lucide-react';
+import { getAdminSession, clearAdminSession, type AdminUser } from '@/lib/auth/admin-static-auth';
 import type {
   PopulatedArticle,
   PopulatedProduct,
@@ -73,6 +75,123 @@ export function AdminDashboardClient({
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [globalSearch, setGlobalSearch] = useState('');
+  const [currentUser, setCurrentUser] = useState<AdminUser | null>(null);
+
+  useEffect(() => {
+    setCurrentUser(getAdminSession());
+  }, []);
+
+  const handleSignOut = () => {
+    clearAdminSession();
+    window.location.href = '/admin/login';
+  };
+
+  // Competition Modal State
+  const [isCompetitionModalOpen, setIsCompetitionModalOpen] = useState(false);
+  const [competitionModalMode, setCompetitionModalMode] = useState<'create' | 'edit'>('create');
+  const [isSavingCompetition, setIsSavingCompetition] = useState(false);
+  const [competitionForm, setCompetitionForm] = useState({
+    id: '',
+    title: '',
+    slug: '',
+    prize_summary: '',
+    description: '',
+    terms: '',
+    start_time: '',
+    end_time: '',
+    status: 'active' as 'active' | 'draft' | 'scheduled' | 'closed',
+    prize_title: '',
+    prize_description: '',
+  });
+
+  const openCreateCompetition = () => {
+    const nextMonth = new Date();
+    nextMonth.setMonth(nextMonth.getMonth() + 2);
+    setCompetitionForm({
+      id: '',
+      title: '',
+      slug: '',
+      prize_summary: 'One luxury silk embellished kaftan valued at up to $350 AUD.',
+      description:
+        'Purchase an eligible kaftan, scan your receipt and go in the draw to win an exclusive silk kaftan from Fashion Spectrum.',
+      terms:
+        'Open to Australian residents aged 18+. Competition closes 31 Dec 2026. Terms and conditions apply.',
+      start_time: new Date().toISOString().slice(0, 16),
+      end_time: nextMonth.toISOString().slice(0, 16),
+      status: 'active',
+      prize_title: 'Grand Prize: Luxury Silk Kaftan of Choice',
+      prize_description:
+        'Winner selects any silk kaftan from the current Fashion Spectrum resort collection.',
+    });
+    setCompetitionModalMode('create');
+    setIsCompetitionModalOpen(true);
+  };
+
+  const openEditCompetition = (comp: CompetitionRow) => {
+    setCompetitionForm({
+      id: comp.id,
+      title: comp.title,
+      slug: comp.slug,
+      prize_summary: comp.prize_summary || '',
+      description: comp.description || '',
+      terms: comp.terms || '',
+      start_time: comp.start_time
+        ? new Date(comp.start_time).toISOString().slice(0, 16)
+        : new Date().toISOString().slice(0, 16),
+      end_time: comp.end_time ? new Date(comp.end_time).toISOString().slice(0, 16) : '',
+      status: (comp.status || 'active') as any,
+      prize_title: 'Grand Prize: Luxury Silk Kaftan of Choice',
+      prize_description: comp.prize_summary || '',
+    });
+    setCompetitionModalMode('edit');
+    setIsCompetitionModalOpen(true);
+  };
+
+  const handleSaveCompetition = async () => {
+    if (!competitionForm.title.trim()) {
+      alert('Please enter a competition title');
+      return;
+    }
+    if (!competitionForm.prize_summary.trim()) {
+      alert('Please enter a prize summary');
+      return;
+    }
+
+    setIsSavingCompetition(true);
+    try {
+      const res = await fetch('/api/admin/competitions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...competitionForm,
+          start_time: competitionForm.start_time
+            ? new Date(competitionForm.start_time).toISOString()
+            : new Date().toISOString(),
+          end_time: competitionForm.end_time
+            ? new Date(competitionForm.end_time).toISOString()
+            : new Date(Date.now() + 60 * 24 * 60 * 60 * 1000).toISOString(),
+        }),
+      });
+
+      const json = await res.json();
+      if (!res.ok) {
+        throw new Error(json.error || 'Failed to save competition');
+      }
+
+      setCompetition(json.data);
+      setIsCompetitionModalOpen(false);
+      showToast(
+        competitionModalMode === 'create'
+          ? 'New giveaway created and activated!'
+          : 'Competition details updated!'
+      );
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : 'Error saving competition';
+      alert(msg);
+    } finally {
+      setIsSavingCompetition(false);
+    }
+  };
 
   // Dynamic Data States
   const [articles, setArticles] = useState<PopulatedArticle[]>(initialArticles);
@@ -596,6 +715,17 @@ export function AdminDashboardClient({
               >
                 <Bell className="w-4 h-4" />
                 <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#C86D51] rounded-full ring-2 ring-[#121110]"></span>
+              </button>
+
+              {/* Header Sign Out */}
+              <button
+                type="button"
+                onClick={handleSignOut}
+                className="hidden sm:inline-flex items-center space-x-1.5 text-xs text-[#55504A] hover:text-[#A94F42] hover:bg-[#EFEAE0] px-2.5 py-1.5 rounded-sm transition-colors border border-[#D8D1C5]"
+                title="Sign out of Admin Suite"
+              >
+                <LogOut className="w-3.5 h-3.5" />
+                <span className="text-[10px] uppercase tracking-wider font-semibold">Sign Out</span>
               </button>
 
               {/* Notifications Dropdown */}

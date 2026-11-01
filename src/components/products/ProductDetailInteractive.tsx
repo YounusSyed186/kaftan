@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
+import { buildCloudinaryUrl } from '@/lib/cloudinary/url';
 import Link from 'next/link';
 import type { PopulatedProduct } from '@/types/models';
 
@@ -91,7 +92,7 @@ export function ProductDetailInteractive({
         <div className="lg:col-span-7 flex flex-col space-y-4">
           <div className="relative aspect-[3/4] w-full bg-[#EFEAE0] border border-[#D8D1C5] overflow-hidden group shadow-xs">
             <Image
-              src={product.image?.storage_key || '/images/products/azure-resort-kaftan.jpg'}
+              src={buildCloudinaryUrl(product.image?.storage_key || 'kaftan/products/azure-resort-kaftan', { width: 1200 })}
               alt={product.name}
               fill
               priority
@@ -426,7 +427,7 @@ export function ProductDetailInteractive({
                   className="relative block w-full aspect-[3/4] overflow-hidden bg-[#EFEAE0] border border-[#D8D1C5]/30"
                 >
                   <Image
-                    src={rel.image?.storage_key || '/images/products/azure-resort-kaftan.jpg'}
+                    src={buildCloudinaryUrl(rel.image?.storage_key || 'kaftan/products/azure-resort-kaftan', { width: 600 })}
                     alt={rel.name}
                     fill
                     sizes="25vw"
