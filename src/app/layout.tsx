@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   },
 };
 
-import { Suspense } from 'react';
+import { SiteShell } from '@/components/layout/SiteShell';
 
 export default async function RootLayout({
   children,
@@ -30,11 +30,9 @@ export default async function RootLayout({
   return (
     <html lang="en" className="h-full antialiased">
       <body className="min-h-full flex flex-col bg-[#F7F4ED] text-[#25221F]">
-        <Suspense fallback={<div className="h-24 bg-[#F7F4ED] border-b border-[#D8D1C5]" />}>
-          <Header navigationItems={navigationItems} />
-        </Suspense>
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <SiteShell navigationItems={navigationItems}>
+          {children}
+        </SiteShell>
       </body>
     </html>
   );

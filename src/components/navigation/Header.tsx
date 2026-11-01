@@ -45,7 +45,7 @@ export function Header({ navigationItems }: HeaderProps) {
       {/* =========================================================================
           DESKTOP MASTHEAD (hidden on small screens)
           ========================================================================= */}
-      <div className="hidden md:block w-full px-5 sm:px-6 pt-4 pb-3">
+      <div className="hidden md:block w-full px-[21px] lg:px-6 pt-3 pb-2.5">
         <div className="grid grid-cols-3 items-center">
           {/* Left: Region & Date */}
           <div className="flex flex-col text-[8.5px] uppercase tracking-[0.24em] text-[#77716A] leading-tight">
@@ -56,7 +56,7 @@ export function Header({ navigationItems }: HeaderProps) {
           {/* Center: KAFTAN Logo & Tagline */}
           <div className="flex flex-col items-center justify-center text-center">
             <Link href="/" className="inline-block group">
-              <h1 className="font-serif-editorial text-[44px] lg:text-[48px] leading-none font-normal tracking-[0.18em] text-[#25221F] uppercase transition-opacity hover:opacity-85">
+              <h1 className="font-serif-editorial text-[42px] lg:text-[46px] leading-none font-normal tracking-[0.18em] text-[#25221F] uppercase transition-opacity hover:opacity-85">
                 KAFTAN
               </h1>
             </Link>
@@ -89,7 +89,7 @@ export function Header({ navigationItems }: HeaderProps) {
 
       {/* Desktop Navigation Row */}
       <div className="hidden md:block border-t border-b border-[#D8D1C5]">
-        <div className="w-full px-5 sm:px-6 py-2.5 flex items-center justify-between">
+        <div className="w-full px-[21px] lg:px-6 h-[46px] flex items-center justify-between">
           <button
             onClick={openMobileDrawer}
             aria-label="Open menu drawer"

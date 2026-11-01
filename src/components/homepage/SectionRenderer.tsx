@@ -31,7 +31,12 @@ export function SectionRenderer({
         .filter(Boolean) as PopulatedArticle[];
       const heroArticle = sectionArticles[0] || allArticles[0];
       if (!heroArticle) return null;
-      const heroArticles = sectionArticles.length > 0 ? sectionArticles : [heroArticle];
+      const heroArticles =
+        sectionArticles.length > 1
+          ? sectionArticles
+          : allArticles.length >= 4
+          ? allArticles.slice(0, 4)
+          : [heroArticle];
       const latestArticles = allArticles
         .filter((a) => a.id !== heroArticle.id)
         .slice(0, 4);

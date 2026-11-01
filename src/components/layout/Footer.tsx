@@ -3,8 +3,8 @@ import Link from 'next/link';
 
 export function Footer() {
   return (
-    <footer className="w-full bg-[#EFEAE0] border-t border-[#D8D1C5] mt-20 pt-16 pb-12">
-      <div className="w-full px-4 sm:px-5 lg:px-6">
+    <footer className="w-full bg-[#EFEAE0] border-t border-[#D8D1C5] mt-6 md:mt-10 pt-10 md:pt-14 pb-10">
+      <div className="w-full px-[21px] lg:px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 pb-12 border-b border-[#D8D1C5]">
           {/* Col 1: Brand & Publication Details */}
           <div className="space-y-4 md:col-span-1">

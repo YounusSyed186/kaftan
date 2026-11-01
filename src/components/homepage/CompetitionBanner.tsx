@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { EditorialImage } from '@/components/media/EditorialImage';
+import Image from 'next/image';
 import type { CompetitionRow } from '@/types/models';
 
 interface CompetitionBannerProps {
@@ -10,54 +10,83 @@ interface CompetitionBannerProps {
 
 export function CompetitionBanner({ competition }: CompetitionBannerProps) {
   return (
-    <section className="w-full px-4 sm:px-5 lg:px-6 py-8">
-      <div className="bg-[#EFEAE0] border border-[#D8D1C5] overflow-hidden grid grid-cols-1 lg:grid-cols-12 items-center">
-        {/* Copy */}
-        <div className="lg:col-span-6 p-8 sm:p-12 flex flex-col justify-center space-y-4">
-          <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#77716A]">
+    <section
+      aria-label="Fashion Competition"
+      className="w-full bg-[#F7F4ED] py-6 sm:py-8 lg:py-10 px-4 sm:px-6 lg:px-8 xl:px-12"
+    >
+      <div className="max-w-[1400px] mx-auto border border-[#D8D1C5] bg-[#FCFAF6] overflow-hidden relative shadow-xs min-h-[290px] sm:min-h-[320px] lg:min-h-[350px] flex items-center">
+        
+        {/* =========================================================================
+            BACKGROUND PHOTO WITH SEAMLESS EDITORIAL GRADIENT FADE
+            The photo smoothly blends into the ivory background on the left.
+            ========================================================================= */}
+        <div
+          className="absolute right-0 top-0 bottom-0 w-[60%] sm:w-[56%] lg:w-[58%] overflow-hidden pointer-events-none select-none z-0"
+          style={{
+            WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.15) 12%, rgba(0,0,0,0.7) 32%, black 50%, black 100%)',
+            maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.15) 12%, rgba(0,0,0,0.7) 32%, black 50%, black 100%)',
+          }}
+        >
+          <Image
+            src="/images/editorial/competition-strawhat-beach.jpg"
+            alt="Woman with straw sun hat looking at Mediterranean ocean"
+            fill
+            sizes="(max-width: 1024px) 70vw, 58vw"
+            className="object-cover object-center"
+            priority
+            unoptimized
+          />
+        </div>
+
+        {/* Soft overlay gradient for extra legibility on smaller viewports */}
+        <div
+          className="absolute inset-0 bg-gradient-to-r from-[#FCFAF6] via-[#FCFAF6]/90 sm:via-[#FCFAF6]/70 to-transparent w-[65%] sm:w-[48%] pointer-events-none z-1"
+          aria-hidden="true"
+        />
+
+        {/* =========================================================================
+            CIRCULAR "WIN A KAFTAN" GOLDEN BRONZE BADGE
+            Matches the reference screenshot in position, color, and typography.
+            ========================================================================= */}
+        <div className="absolute top-5 right-5 sm:top-7 sm:right-7 lg:top-8 lg:right-10 w-20 h-20 sm:w-24 sm:h-24 lg:w-[102px] lg:h-[102px] rounded-full bg-[#785E32] text-[#FAF8F5] flex flex-col items-center justify-center text-center shadow-md z-20 pointer-events-none">
+          <span className="font-serif-editorial text-[22px] sm:text-[26px] lg:text-[29px] font-normal tracking-[0.04em] leading-none text-[#FAF8F5]">
+            WIN
+          </span>
+          <span className="text-[9px] sm:text-[10px] lg:text-[10.5px] font-sans font-light tracking-normal text-[#FAF8F5] mt-1">
+            a Kaftan
+          </span>
+        </div>
+
+        {/* =========================================================================
+            LEFT EDITORIAL COPY BLOCK
+            Exact reference match: Category, 2-line Serif Heading, Excerpt, CTA
+            ========================================================================= */}
+        <div className="relative z-10 p-6 sm:p-8 lg:p-12 xl:p-14 max-w-[520px] lg:max-w-[580px] flex flex-col justify-center">
+          <span className="text-[9.5px] lg:text-[10px] font-semibold uppercase tracking-[0.24em] text-[#706C66] block">
             Competition —
           </span>
 
-          <h3 className="font-serif-editorial text-3xl sm:text-4xl lg:text-[40px] leading-tight text-[#25221F] font-normal">
-            {competition.title}
+          <h3 className="font-serif-editorial text-[26px] sm:text-[32px] lg:text-[38px] xl:text-[42px] font-normal leading-[1.08] text-[#25221F] mt-3 lg:mt-3.5">
+            Win a Kaftan<br />from Fashion Spectrum
           </h3>
 
-          <p className="text-xs sm:text-sm text-[#77716A] leading-relaxed max-w-lg">
-            {competition.description}
+          <p className="text-[11.5px] lg:text-[12.5px] text-[#6E6962] leading-[1.62] mt-3.5 lg:mt-4 font-light max-w-[380px] lg:max-w-[420px]">
+            {competition.description || 'Purchase an eligible kaftan, scan the QR code, upload your receipt and go in the draw to win a stunning kaftan from Fashion Spectrum.'}
           </p>
 
-          <div className="pt-4">
+          <div className="pt-4 lg:pt-5">
             <button
+              type="button"
               onClick={() => {
                 alert('Competition entry form will open when active submission period begins.');
               }}
-              className="inline-flex items-center text-[11px] font-semibold uppercase tracking-[0.2em] text-[#25221F] border border-[#25221F] px-6 py-3 hover:bg-[#25221F] hover:text-[#F7F4ED] transition-colors"
+              className="inline-flex items-center text-[9px] lg:text-[9.5px] font-semibold uppercase tracking-[0.22em] text-[#25221F] border border-[#25221F] bg-transparent px-5 py-2 hover:bg-[#25221F] hover:text-[#FAF8F5] transition-colors gap-2 cursor-pointer"
             >
-              Enter Now &rarr;
+              Enter Now <span>&rarr;</span>
             </button>
           </div>
         </div>
 
-        {/* Image with Gold Badge */}
-        <div className="lg:col-span-6 relative h-[320px] sm:h-[380px] lg:h-[420px] overflow-hidden bg-[#F7F4ED]">
-          <EditorialImage
-            src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=85"
-            alt="Woman with sun hat on ocean beach"
-            fill
-            sizes="(max-width: 1024px) 100vw, 50vw"
-            className="h-full w-full object-cover"
-          />
-
-          {/* Golden Badge matching reference */}
-          <div className="absolute top-6 right-6 sm:top-10 sm:right-10 w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-[#7A6136] text-[#F7F4ED] flex flex-col items-center justify-center text-center shadow-lg border-2 border-[#A88C52] z-10">
-            <span className="font-serif-editorial text-2xl sm:text-3xl italic tracking-wider leading-none">
-              WIN
-            </span>
-            <span className="text-[9px] sm:text-[10px] uppercase tracking-widest mt-1 font-sans">
-              a Kaftan
-            </span>
-          </div>
-        </div>
       </div>
     </section>
   );

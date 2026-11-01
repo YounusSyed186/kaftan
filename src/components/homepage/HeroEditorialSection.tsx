@@ -84,16 +84,16 @@ export function HeroEditorialSection({
   return (
     <section
       aria-label="Hero Editorial"
-      className="w-full px-5 sm:px-6 pt-3.5 sm:pt-4 pb-8"
+      className="w-full px-[21px] lg:px-6 pt-3.5 sm:pt-4 pb-8"
     >
       {/* =========================================================================
-          DESKTOP HERO COMPOSITION (Screen >= lg)
-          Full-viewport editorial grid: dominant hero image panel (~71.5%) with left text overlay,
-          compact latest-stories index (~27.5%) on right.
+          DESKTOP HERO COMPOSITION (Screen >= md)
+          Fluid editorial grid: dominant hero image panel (~71%) with left text overlay,
+          compact latest-stories index (~27%) on right.
           ========================================================================= */}
-      <div className="hidden lg:grid grid-cols-[minmax(0,2.6fr)_minmax(250px,1fr)] gap-[19px] lg:gap-5 items-start w-full min-w-0">
-        {/* Left Column: Hero Photographic Panel with Left Text Overlay (Aspect 1.30:1) */}
-        <div className="relative w-full aspect-[1.30/1] overflow-hidden bg-[#EFEAE0]">
+      <div className="hidden md:grid grid-cols-[minmax(0,2.658fr)_minmax(0,1fr)] gap-[19px] lg:gap-5 items-start w-full min-w-0">
+        {/* Left Column: Hero Photographic Panel with Left Text Overlay (Aspect 1.30:1 -> 521x400 at 778px) */}
+        <div className="relative w-full aspect-[1.3025/1] max-h-[520px] xl:max-h-[540px] overflow-hidden bg-[#EFEAE0]">
           {/* Background Hero Image */}
           <Link
             href={`/stories/${activeArticle.slug}`}
@@ -108,7 +108,7 @@ export function HeroEditorialSection({
               fill
               priority
               disableZoom
-              focalPoint={{ x: 0.65, y: 0.25 }}
+              focalPoint={{ x: 0.60, y: 0.35 }}
               sizes="(max-width: 1024px) 100vw, 75vw"
               className="w-full h-full"
             />
@@ -121,29 +121,29 @@ export function HeroEditorialSection({
           />
 
           {/* Editorial Text Block Overlay (Left-aligned over photograph) */}
-          <div className="absolute left-7 lg:left-8 top-7 lg:top-8 z-10 flex flex-col items-start max-w-[215px]">
-            <span className="text-[8.5px] lg:text-[9px] font-semibold tracking-[0.25em] text-[#55504A] uppercase">
+          <div className="absolute left-6 md:left-7 lg:left-8 top-6 md:top-7 lg:top-8 z-10 flex flex-col items-start max-w-[215px] xl:max-w-[280px]">
+            <span className="text-[8.5px] lg:text-[9px] xl:text-[10px] font-semibold tracking-[0.25em] text-[#55504A] uppercase">
               The Kaftan Edit
             </span>
 
             {/* Desktop Headline with Editorial Narrow Column Line Breaks */}
             <div className="mt-2.5">
               {activeArticle.title === 'A New Season of Modern Elegance' ? (
-                <h2 className="font-serif-editorial text-[38px] lg:text-[42px] leading-[0.96] text-[#25221F] font-normal tracking-[-0.01em]">
+                <h2 className="font-serif-editorial text-[38px] lg:text-[42px] xl:text-[46px] leading-[0.96] text-[#25221F] font-normal tracking-[-0.01em]">
                   <span className="block">A New</span>
                   <span className="block">Season of</span>
                   <span className="block">Modern</span>
                   <span className="block">Elegance</span>
                 </h2>
               ) : (
-                <h2 className="font-serif-editorial text-3xl sm:text-4xl lg:text-[40px] leading-[0.96] text-[#25221F] font-normal tracking-[-0.01em]">
+                <h2 className="font-serif-editorial text-3xl sm:text-4xl lg:text-[40px] xl:text-[44px] leading-[0.96] text-[#25221F] font-normal tracking-[-0.01em]">
                   {activeArticle.title}
                 </h2>
               )}
             </div>
 
             {/* Supporting Description */}
-            <p className="text-[10px] lg:text-[10.5px] text-[#3D3934] leading-[1.42] max-w-[200px] mt-3 font-normal">
+            <p className="text-[10px] lg:text-[10.5px] xl:text-[11.5px] text-[#3D3934] leading-[1.42] max-w-[200px] xl:max-w-[260px] mt-3 font-normal">
               {activeArticle.excerpt}
             </p>
 
@@ -151,7 +151,7 @@ export function HeroEditorialSection({
             <div className="mt-4">
               <Link
                 href={`/stories/${activeArticle.slug}`}
-                className="inline-flex items-center text-[8.5px] font-medium uppercase tracking-[0.18em] text-[#25221F] border border-[#25221F] px-3.5 py-1.5 hover:bg-[#25221F] hover:text-[#F7F4ED] transition-colors bg-[#F7F4ED]/20 backdrop-blur-xs"
+                className="inline-flex items-center text-[8.5px] xl:text-[9.5px] font-medium uppercase tracking-[0.18em] text-[#25221F] border border-[#25221F] px-3.5 xl:px-4 py-1.5 xl:py-2 hover:bg-[#25221F] hover:text-[#F7F4ED] transition-colors bg-[#F7F4ED]/20 backdrop-blur-xs"
               >
                 <span>Explore The Edit</span>
                 <span className="ml-2">&rarr;</span>
@@ -161,14 +161,14 @@ export function HeroEditorialSection({
 
           {/* Desktop Carousel Controls (Lower-Left edge of Hero Image matching reference) */}
           {totalSlides > 1 && (
-            <div className="absolute bottom-6 left-7 lg:left-8 flex items-center space-x-5 z-10 pointer-events-auto">
+            <div className="absolute bottom-5 md:bottom-6 left-6 md:left-7 lg:left-8 flex items-center space-x-4 md:space-x-5 z-10 pointer-events-auto">
               {/* Pagination & Progress Line */}
               <div className="flex items-center space-x-3">
-                <span className="font-mono text-[10px] tracking-wider text-[#25221F]">
+                <span className="font-serif-editorial text-[11px] md:text-[12px] tracking-wider text-[#25221F] font-normal">
                   0{currentSlide} / 0{totalSlides}
                 </span>
                 <div
-                  className="w-14 lg:w-16 h-[1.5px] bg-[#D8D1C5] relative overflow-hidden"
+                  className="w-12 md:w-16 h-[1.5px] bg-[#25221F]/20 relative overflow-hidden"
                   role="progressbar"
                   aria-valuenow={currentSlide}
                   aria-valuemin={1}
@@ -186,16 +186,16 @@ export function HeroEditorialSection({
                 <button
                   onClick={prevSlide}
                   aria-label="Previous slide"
-                  className="w-6 h-6 rounded-full border border-[#D8D1C5] bg-[#F7F4ED]/50 backdrop-blur-xs flex items-center justify-center text-[#25221F] hover:border-[#25221F] hover:bg-[#F7F4ED] transition-colors"
+                  className="w-[26px] h-[26px] rounded-full border border-[#25221F]/30 bg-white/20 backdrop-blur-xs flex items-center justify-center text-[#25221F] hover:border-[#25221F] hover:bg-white/40 transition-colors cursor-pointer"
                 >
-                  <ChevronLeft className="w-3 h-3 stroke-[1.5]" />
+                  <ChevronLeft className="w-3.5 h-3.5 stroke-[1.5]" />
                 </button>
                 <button
                   onClick={nextSlide}
                   aria-label="Next slide"
-                  className="w-6 h-6 rounded-full border border-[#D8D1C5] bg-[#F7F4ED]/50 backdrop-blur-xs flex items-center justify-center text-[#25221F] hover:border-[#25221F] hover:bg-[#F7F4ED] transition-colors"
+                  className="w-[26px] h-[26px] rounded-full border border-[#25221F]/30 bg-white/20 backdrop-blur-xs flex items-center justify-center text-[#25221F] hover:border-[#25221F] hover:bg-white/40 transition-colors cursor-pointer"
                 >
-                  <ChevronRight className="w-3 h-3 stroke-[1.5]" />
+                  <ChevronRight className="w-3.5 h-3.5 stroke-[1.5]" />
                 </button>
               </div>
             </div>
@@ -209,12 +209,12 @@ export function HeroEditorialSection({
         >
           {/* Section Header */}
           <div className="flex items-center justify-between pb-2 border-b border-[#D8D1C5]">
-            <h3 className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#25221F]">
+            <h3 className="text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.25em] text-[#25221F]">
               The Latest
             </h3>
             <Link
               href="/latest"
-              className="text-[8px] font-semibold uppercase tracking-[0.2em] text-[#77716A] hover:text-[#25221F] transition-colors"
+              className="text-[8px] xl:text-[8.5px] font-semibold uppercase tracking-[0.2em] text-[#77716A] hover:text-[#25221F] transition-colors"
             >
               View All &rarr;
             </Link>
@@ -225,33 +225,33 @@ export function HeroEditorialSection({
             {displayedLatest.map((story) => (
               <article
                 key={story.id}
-                className="py-2.5 group"
+                className="py-2 xl:py-2.5 group"
               >
                 <Link
                   href={`/stories/${story.slug}`}
-                  className="flex items-center space-x-3.5"
+                  className="flex items-center space-x-3 xl:space-x-3.5"
                 >
-                  {/* Clean Editorial Thumbnail Image (~76px square) */}
-                  <div className="w-[76px] h-[76px] aspect-square overflow-hidden bg-[#EFEAE0] flex-shrink-0">
+                  {/* Clean Editorial Thumbnail Image (~76-80px square) */}
+                  <div className="w-[76px] xl:w-[86px] 2xl:w-[92px] h-[76px] xl:h-[86px] 2xl:h-[92px] aspect-square overflow-hidden bg-[#EFEAE0] flex-shrink-0">
                     <EditorialImage
                       media={story.featured_image}
                       src={story.featured_image?.storage_key}
                       alt={story.title}
                       fill
-                      sizes="80px"
+                      sizes="92px"
                       className="w-full h-full"
                     />
                   </div>
 
                   {/* Text Content */}
                   <div className="flex flex-col justify-center py-0.5 flex-1 min-w-0">
-                    <span className="text-[7.5px] font-semibold uppercase tracking-[0.2em] text-[#77716A]">
+                    <span className="text-[7px] md:text-[7.5px] xl:text-[8px] font-semibold uppercase tracking-[0.2em] text-[#77716A]">
                       {getStoryKicker(story)}
                     </span>
-                    <h4 className="font-serif-editorial text-[12px] lg:text-[13px] font-normal leading-[1.2] text-[#25221F] group-hover:text-[#A94F42] transition-colors line-clamp-2 mt-0.5">
+                    <h4 className="font-serif-editorial text-[11.5px] md:text-[12px] xl:text-[14px] 2xl:text-[15px] font-normal leading-[1.22] text-[#25221F] group-hover:text-[#A94F42] transition-colors line-clamp-3 mt-0.5">
                       {story.title}
                     </h4>
-                    <span className="text-[7.5px] uppercase tracking-wider text-[#77716A] mt-1 block">
+                    <span className="text-[7px] md:text-[7.5px] xl:text-[8px] uppercase tracking-wider text-[#77716A] mt-1 block">
                       {formatEditorialDate(story.published_at)}
                     </span>
                   </div>
@@ -270,7 +270,7 @@ export function HeroEditorialSection({
           3. Carousel controls row
           4. "THE LATEST" stacked list section below
           ========================================================================= */}
-      <div className="lg:hidden flex flex-col">
+      <div className="md:hidden flex flex-col">
         {/* 1. Mobile Hero Image (Portrait Crop) */}
         <div className="relative w-full aspect-[1/1] sm:aspect-[4/3] overflow-hidden bg-[#EFEAE0]">
           <Link
